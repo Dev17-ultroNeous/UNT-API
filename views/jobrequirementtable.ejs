@@ -50,36 +50,36 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">DepartmentName</th>
+                    <th scope="col">departmentName</th>
                     <th scope="col"></th>
-    
+                    
                   </tr>
                 </thead>
                 <tbody>
                   <% for(var i = 0; i < data.length; i++) { %>
                 
                         <tr>
-                          <td><%= i + 1 %></td>
+                          <td id="ids"><%= i + 1 %></td>
                           <td><%= data[i].name %></td>          
                           <!-- <td><%= data[i].fieldCount %></td> -->
+
                           <td>
-                            <ul class="list-inline m-0">
-                                
-                              <li class="list-inline-item">
-                                  <a href="technologyadd?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                              </li>
-                              <li class="list-inline-item">
-                                  <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                              </li>
-                          </ul>
-                          </td>
+                            <span class="icon">
+                               <a href="technologyadd?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                            </span>
+                     
+                       <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                      </td>
+
+
+                        
                           <% } %> 
                         </tr>
                    
                  
                 </tbody>
               </table>
-            
+         
           </div>
         </div>
     
@@ -100,14 +100,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
 <!-- Page specific script -->
 <script>
- 
- $(function () {
+    $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(document).on("click", "#deleted", async function () {
+ $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
-console.log(id);
+
     var request = {
         "url": `http://localhost:8000/admin/jobrequirementsdelete/${id}`,
         "method": "post"
@@ -116,12 +115,14 @@ console.log(id);
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
             alert("Data Deleted Successfully!");
-            location.reload();   
+            location.reload();
+    
         })
 
     }
 
 })
+
 
 </script>
 </body>

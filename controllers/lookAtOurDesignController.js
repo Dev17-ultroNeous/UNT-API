@@ -29,7 +29,7 @@ exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
     req.file.filename = `Design-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
-        .resize(500, 500)
+        .resize(385, 302)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
         .toFile(`public/design/${req.file.filename}`);

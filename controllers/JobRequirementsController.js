@@ -155,7 +155,7 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
         subject: "Inquire",
         html:
             "<h2 style='font-weight:bold;'>Inquire Of UNT</h2>" +
-            "<table  border= 'none'>" +
+
             "<tr><td style='font-weight:bold;'>Name:</td>" +
             "<td id='ids'>" +
             req.body.name +
@@ -182,8 +182,8 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
             "<tr><td style='font-weight:bold;'>Message:</td>" +
             "<td id='ids'>" +
             req.body.message +
-            "</td></tr>" +
-            "</table>",
+            "</td></tr>"
+
     };
     let mailForUser;
 
