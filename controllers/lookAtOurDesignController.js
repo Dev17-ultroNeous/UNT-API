@@ -46,11 +46,10 @@ exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
     const data = await LookAtOurDesign.create({
         image: req.body.image,
     });
-    data.image = process.env.API_URL + "/public/design/" + data.image;
-    res.status(200).json({
-        status: "success",
-        data,
-    });
+    if (data) {
+        res.redirect("./lookourdesigntable");
+    }
+
 });
 
 exports.getLookAtOurDesign = catchAsync(async (req, res, next) => {

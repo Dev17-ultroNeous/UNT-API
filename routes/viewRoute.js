@@ -34,7 +34,7 @@ router.get('/clienttable', viewController.clientTable)
 router.get('/clientfeedbackadd', viewController.clientFeedback)
 router.get('/clientfeedback', viewController.clientFeedbackForUpdate)
 
-router.post("/lookatourdesignadd", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.LookAtOurDesignUpdate)
+router.post("/lookatourdesignadd", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.lookAtOurDesign)
 router.post("/lookourdesignupdate", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.LookAtOurDesignUpdate)
 router.get('/lookourdesignadd', viewController.LookAtOurDesignAdd)
 router.get('/lookourdesignupdate', viewController.LookOurDesignUpdate)
