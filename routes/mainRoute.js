@@ -28,7 +28,7 @@ router.post("/employefeedbackdelete/:id", FeedbackController.employeFeedbackDele
 router.post("/employefeedbackupdate/:id", FeedbackController.employeFeedbackUpdate);
 
 router.post("/listofservices", listOfServices.uploadServicePhotos,
-    listOfServices.resizeServicePhoto, validateTrim, listOfServices.listOfServices);
+    listOfServices.listOfServices);
 
 router.post("/listofservicesdelete/:id", listOfServices.ListOfServicesDelete);
 router.post("/listofservicesupdate/:id", listOfServices.ListOfServicesUpdate);

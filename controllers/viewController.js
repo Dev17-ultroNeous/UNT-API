@@ -195,6 +195,7 @@ exports.technologyAdd = catchAsync(async (req, res, next) => {
 
 exports.clientFeedbackForUpdate = catchAsync(async (req, res, next) => {
     let data = await ClientFeedback.findById({ _id: req.query.id });
+    data.image = process.env.API_URL + "/public/users/" + data.image;
     res.render('clientfeedback', {
         data: data
     })
@@ -202,6 +203,7 @@ exports.clientFeedbackForUpdate = catchAsync(async (req, res, next) => {
 })
 exports.employeFeedbackForUpdate = catchAsync(async (req, res, next) => {
     let data = await EmployeFeedback.findById({ _id: req.query.id });
+    data.image = process.env.API_URL + "/public/users/" + data.image;
     res.render('employefeedbackupdate', {
         data: data
     })
@@ -209,6 +211,7 @@ exports.employeFeedbackForUpdate = catchAsync(async (req, res, next) => {
 
 exports.LookOurDesignUpdate = catchAsync(async (req, res, next) => {
     let data = await LookAtOurDesign.findById({ _id: req.query.id });
+    data.image = process.env.API_URL + "/public/design/" + data.image;
     res.render('lookourdesignupdate', {
         data: data
     })

@@ -26,23 +26,18 @@ exports.uploadDesignPhotos = upload.single("image");
 
 exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
-    req.file.filename = `Design-${Date.now()}.jpeg`;
+    req.body.image = `Design-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
         .resize(385, 302)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
-        .toFile(`public/design/${req.file.filename}`);
+        .toFile(`public/design/${req.body.image}`);
     next();
 });
 
 exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
-    if (!req.file) {
-        return next(new catchAppError("Please enter image", 405));
-    }
-    if (req.file) {
-        req.body.image = `${req.file.filename}`;
-    }
+
     const data = await LookAtOurDesign.create({
         image: req.body.image,
     });
@@ -67,12 +62,8 @@ exports.getLookAtOurDesign = catchAsync(async (req, res, next) => {
 });
 
 exports.LookAtOurDesignUpdate = catchAsync(async (req, res, next) => {
-    if (!req.body.id) {
-        return next(new catchAppError("Please enter id", 405));
-    }
 
 
-    req.body.image = `${req.file.filename}`;
 
     const data = await LookAtOurDesign.findByIdAndUpdate(
         { _id: req.body.id },

@@ -4,42 +4,52 @@ const ListOfServices = require("../models/listOfServicesModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const multerStorage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
 
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-    } else {
-        cb(new AppError("Not an image! Please upload only images.", 400), false);
+        cb(null, 'public/service/')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+        req.body.image = uniqueSuffix + file.originalname;
+        req.body.icon = uniqueSuffix + file.originalname;
+        cb(null, uniqueSuffix + file.originalname)
     }
-};
+});
+
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter,
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
 });
+exports.uploadServicePhotos = upload.single("image");
 
-exports.uploadServicePhotos = upload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "icon", maxCount: 1 },
-]);
-exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
-    //icon
-    req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.icon[0].buffer)
-        .resize(45, 45)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/icon/${req.body.icon}`);
-    //image
-    req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.image[0].buffer)
-        .resize(200, 200)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/service/${req.body.image}`);
 
-    next();
-});
+// exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
+//     //icon
+//     req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
+//     await sharp(req.files.icon[0].buffer)
+//         .resize(45, 45)
+//         .toFormat("jpeg")
+//         .jpeg({ quality: 100 })
+//         .toFile(`public/icon/${req.body.icon}`);
+//     //image
+//     req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
+//     await sharp(req.files.image[0].buffer)
+//         .resize(200, 200)
+//         .toFormat("jpeg")
+//         .jpeg({ quality: 100 })
+//         .toFile(`public/service/${req.body.image}`);
+
+//     next();
+// });
 
 exports.listOfServices = catchAsync(async (req, res, next) => {
 
