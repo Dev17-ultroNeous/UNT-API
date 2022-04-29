@@ -61,9 +61,8 @@
                   <!-- /.card-header -->
                   <!-- form start -->
                   <form
-                    action="/admin/lookourdesignupdate"
+                    action="/admin/technologyofcontactusupdate"
                     method="post"
-                    enctype="multipart/form-data"
                   >
                     <div class="card-body">
                       <div class="form-group">
@@ -72,6 +71,13 @@
                           type="hidden"
                           name="id"
                           value="<%= data._id %>"
+                        />
+                        <input
+                          type="text"
+                          name="name"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          value="<%= data.name%>"
                         />
                       </div>
 
@@ -83,16 +89,6 @@
                           class="form-control"
                           id="exampleInputPassword1"
                           value="<%= data.type%>"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">sequence</label>
-                        <input
-                          type="number"
-                          name="sequence"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          value="<%= data.sequence %>"
                         />
                       </div>
                     </div>

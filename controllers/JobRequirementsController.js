@@ -108,9 +108,9 @@ exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) =>
 
 
 exports.getJobRequirements = catchAsync(async (req, res, next) => {
-    let data = await JobRequirements.find({});
+    let data = await JobRequirements.find({}).sort([["createdAt", -1]])
 
-    let technology = await TechnologyOfJob.find({});
+    let technology = await TechnologyOfJob.find({}).sort([["createdAt", -1]])
     res.status(200).json({
         data,
         technology,
@@ -217,7 +217,7 @@ exports.getContactUsData = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await ContactUs.countDocuments();
-    const data = await ContactUs.find({}).limit(limits).skip(skip);
+    const data = await ContactUs.find({}).sort([["createdAt", -1]]).limit(limits).skip(skip)
     res.status(200).json({
         status: "success",
         data,
@@ -249,7 +249,7 @@ exports.technologiesOfContactUsDelete = catchAsync(async (req, res, next) => {
 
 exports.technologiesOfContactUsUpdate = catchAsync(async (req, res, next) => {
 
-    const data = await TechnologiesOfContactUs.findByIdAndUpdate({ _id: req.params.id },
+    const data = await TechnologiesOfContactUs.findByIdAndUpdate({ _id: req.body.id },
         {
             name: req.body.name,
             type: req.body.type

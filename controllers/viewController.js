@@ -137,7 +137,7 @@ exports.listOfServiceTable = catchAsync(async (req, res, next) => {
     })
 })
 exports.contactUsTable = catchAsync(async (req, res, next) => {
-    const data = await ContactUs.find({});
+    const data = await ContactUs.find({}).sort([["createdAt", -1]]);
 
     res.render('contactustable', {
         data: data,
@@ -145,19 +145,13 @@ exports.contactUsTable = catchAsync(async (req, res, next) => {
 })
 
 exports.technologyOfContactUsTable = catchAsync(async (req, res, next) => {
-    const data = await TechnologiesOfContactUs.find({});
+    const data = await TechnologiesOfContactUs.find({}).sort([["createdAt", -1]]);
 
     res.render('technologyofcontactustable', {
         data: data,
     })
 })
-exports.technologyOfContactUsUpdate = catchAsync(async (req, res, next) => {
-    const data = await TechnologiesOfContactUs.find({});
 
-    res.render('technologyofcontactustable', {
-        data: data,
-    })
-})
 
 exports.LookAtOurDesign = catchAsync(async (req, res, next) => {
     const data = await LookAtOurDesign.find({})
@@ -219,7 +213,13 @@ exports.LookOurDesignUpdate = catchAsync(async (req, res, next) => {
         data: data
     })
 })
+exports.technologyOfContactUsUpdate = catchAsync(async (req, res, next) => {
+    const data = await TechnologiesOfContactUs.findById({ _id: req.query.id });
 
+    res.render('technologyofcontactusupdate', {
+        data: data,
+    })
+})
 exports.JobRequirementTable = catchAsync(async (req, res, next) => {
 
     let data = await JobRequirements.find({});
@@ -269,8 +269,6 @@ exports.listOfServiceForUpdate = catchAsync(async (req, res, next) => {
     let data = await ListOfServices.findById({ _id: req.query.id });
 
     data.image = process.env.API_URL + "/public/service/" + data.image;
-
-
     data.icon = process.env.API_URL + "/public/icon/" + data.icon;
 
     res.render('listofserviceupdate', {

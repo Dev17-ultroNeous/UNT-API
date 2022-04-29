@@ -54,7 +54,7 @@ exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
 });
 
 exports.getLookAtOurDesign = catchAsync(async (req, res, next) => {
-    const data = await LookAtOurDesign.find({ isImageShow: true })
+    const data = await LookAtOurDesign.find({ isImageShow: true }).sort([["createdAt", -1]])
         .sort([["sequence", 1]])
         .exec();
     data.map(async (el) => {

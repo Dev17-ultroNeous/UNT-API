@@ -51,7 +51,7 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">DepartmentName</th>
-                    <th scope="col"></th>
+                    <th scope="col">Type</th>
                     <th scope="col"></th>
                   
                   </tr>
@@ -67,7 +67,7 @@
                             <td>  <ul class="list-inline m-0">
                                 
                                 <li class="list-inline-item">
-                                    <a href="listofserviceupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="technologyofcontactusupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                                 </li>
                                 <li class="list-inline-item">
                                     <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
@@ -107,7 +107,7 @@
 
 $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
-console.log(id);
+
     var request = {
         "url": `http://localhost:8000/admin/technologiesofcontactusdelete/${id}`,
         "method": "post"
