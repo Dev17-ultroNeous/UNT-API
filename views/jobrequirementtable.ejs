@@ -33,7 +33,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
               padding-right: 10px;
-              padding-left: 10px;"><a href="clientfeedbackadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
+              padding-left: 10px;"><a href="jobrequirementadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
        
             </ol>
           </div>
@@ -50,40 +50,36 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">Description</th>
-                  <th scope="col">image</th>
-                  <th scope="col"></th>
+                    <th scope="col">DepartmentName</th>
+                    <th scope="col"></th>
+    
                   </tr>
                 </thead>
                 <tbody>
                   <% for(var i = 0; i < data.length; i++) { %>
+                
                         <tr>
-                          <td id="ids"><%= i + 1 %></td>
-                          <td><%= data[i].name %></td>
-                          <td><%= data[i].company %></td>
-                          <td><%= data[i].designation %></td>
-                          <td><%= data[i].description %></td>
-                       <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
-                       <td>      
-                    
-                          <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                       </td>
-                       <td>
-                            <a href="clientfeedback?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                       
-                      
-                   
-                         </td>
-                        
+                          <td><%= i + 1 %></td>
+                          <td><%= data[i].name %></td>          
+                          <!-- <td><%= data[i].fieldCount %></td> -->
+                          <td>
+                            <ul class="list-inline m-0">
+                                
+                              <li class="list-inline-item">
+                                  <a href="technologyadd?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                              </li>
+                              <li class="list-inline-item">
+                                  <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                              </li>
+                          </ul>
+                          </td>
+                          <% } %> 
                         </tr>
-    
-                        <% } %> 
+                   
                  
                 </tbody>
               </table>
+            
           </div>
         </div>
     
@@ -104,23 +100,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
+ 
+ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
 $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
-
+console.log(id);
     var request = {
-        "url": `http://localhost:8000/admin/clientfeedbackdelete/${id}`,
+        "url": `http://localhost:8000/admin/jobrequirementsdelete/${id}`,
         "method": "post"
     }
 
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
             alert("Data Deleted Successfully!");
-            location.reload();
-    
+            location.reload();   
         })
 
     }

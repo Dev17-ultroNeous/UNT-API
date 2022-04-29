@@ -16,7 +16,7 @@ const {
 } = require("../utils/validation");
 
 router.post("/clientfeedback", FeedbackController.uploadUserPhotos,
-    FeedbackController.resizeUserPhoto, validateTrim, FeedbackController.clientFeedback);
+    FeedbackController.clientFeedback);
 
 router.post("/clientfeedbackdelete/:id", FeedbackController.clientFeedbackDelete);
 router.post("/clientfeedbackupdate/:id", FeedbackController.clientFeedbackUpdate);
@@ -33,8 +33,8 @@ router.post("/listofservices", listOfServices.uploadServicePhotos,
 router.post("/listofservicesdelete/:id", listOfServices.ListOfServicesDelete);
 router.post("/listofservicesupdate/:id", listOfServices.ListOfServicesUpdate);
 
-router.post("/jobrequirements", JobRequirementsController.jobRequirements);
-router.post("/jobrequirementsdelete", JobRequirementsController.jobRequirementsDelete);
+// router.post("/jobrequirements", JobRequirementsController.jobRequirements);
+router.post("/jobrequirementsdelete/:id", JobRequirementsController.jobRequirementsDelete);
 router.post("/jobrequirementsupdate", JobRequirementsController.jobRequirementsUpdate);
 
 router.post("/technologyadd", validateTechnology, JobRequirementsController.technologyOfJobRequirements)
@@ -44,11 +44,12 @@ router.post("/contactusdata", validateEmail,
     validatePhone, JobRequirementsController.contactUsData);
 
 router.post("/lookatourdesign", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.lookAtOurDesign)
-
-router.post("/lookatourdesignupdate", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.LookAtOurDesignUpdate);
+router.post("/lookatourdesigndelete/:id", LookAtOurDesign.LookAtOurDesignDelete);
+router.post("/lookatourdesignupdate/:id", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.LookAtOurDesignUpdate);
 
 router.post("/technologiesofcontactus", JobRequirementsController.technologiesOfContactUs);
-router.post("/technologiesofcontactusdelete", JobRequirementsController.technologiesOfContactUsDelete);
+router.post("/technologiesofcontactusdelete/:id", JobRequirementsController.technologiesOfContactUsDelete);
+router.post("/technologiesofcontactusupdate/:id", JobRequirementsController.technologiesOfContactUsUpdate);
 
 router.post("/signup", validatePassword, userController.signUp);
 router.post("/signin", validateEmail, validatePassword,

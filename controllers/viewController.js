@@ -6,10 +6,15 @@ let alert = require('alert-node');
 const ClientFeedback = require("../models/clientFeedbackModel");
 const EmployeFeedback = require("../models/employeFeedbackModel")
 const ListOfServices = require("../models/listOfServicesModel");
+const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
+const TechnologiesOfContactUs = require("../models/technologiesOfContactUsModel");
+
 const multer = require("multer");
 const sharp = require("sharp");
 
-
+const LookAtOurDesign = require("../models/lookAtOurDesignModel");
+const JobRequirements = require("../models/JobRequirementsModel");
+const { technologiesOfContactUs } = require("./JobRequirementsController");
 exports.getView = catchAsync(async (req, res, next) => {
 
     const data = await ContactUs.find({});
@@ -43,45 +48,38 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
 
 
 })
-const multerStorage = multer.memoryStorage();
 
-const multerFilter = (req, file, cb) => {
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
 
-    if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-    } else {
-        cb(
-            new catchAppError("Not an image! Please upload only images.", 400),
-            false
-        );
+        cb(null, 'public/users/')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+        req.body.image = uniqueSuffix + file.originalname;
+        cb(null, uniqueSuffix + file.originalname)
     }
-};
+});
 
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter,
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
 });
-
 exports.uploadUserPhotos = upload.single("image");
 
-exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-    if (!req.file) return next();
-    req.file.filename = `${req.body.name}-${Date.now()}.jpeg`;
-
-    await sharp(req.file.buffer)
-        .resize(149, 149)
-        .flatten({ background: { r: 255, g: 255, b: 255, alpha: 1 } })
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/users/${req.file.filename}`);
-
-    next();
-});
 exports.employeAdd = catchAsync(async (req, res, next) => {
     const data = await EmployeFeedback.create({
         name: req.body.name,
         designation: req.body.designation,
-        image: req.file.filename,
+        image: req.body.image,
         description: req.body.description
     });
 
@@ -95,7 +93,7 @@ exports.clientAdd = catchAsync(async (req, res, next) => {
         name: req.body.name,
         company: req.body.company,
         designation: req.body.designation,
-        image: req.file.filename,
+        image: req.body.image,
         description: req.body.description,
     });
 
@@ -145,14 +143,62 @@ exports.contactUsTable = catchAsync(async (req, res, next) => {
         data: data,
     })
 })
+
+exports.technologyOfContactUsTable = catchAsync(async (req, res, next) => {
+    const data = await TechnologiesOfContactUs.find({});
+
+    res.render('technologyofcontactustable', {
+        data: data,
+    })
+})
+exports.technologyOfContactUsUpdate = catchAsync(async (req, res, next) => {
+    const data = await TechnologiesOfContactUs.find({});
+
+    res.render('technologyofcontactustable', {
+        data: data,
+    })
+})
+
+exports.LookAtOurDesign = catchAsync(async (req, res, next) => {
+    const data = await LookAtOurDesign.find({})
+        .sort([["sequence", 1]])
+        .exec();
+    data.map(async (el) => {
+        el.image = process.env.API_URL + "/public/design/" + el.image;
+    });
+    res.render('lookourdesigntable', {
+        data: data,
+    })
+});
+
 exports.clientFeedback = catchAsync(async (req, res, next) => {
     res.render('clientfeedbackadd')
 })
-
+exports.LookAtOurDesignAdd = catchAsync(async (req, res, next) => {
+    res.render('lookourdesignadd')
+})
 
 exports.employeFeedback = catchAsync(async (req, res, next) => {
     res.render('employefeedbackadd')
 })
+
+exports.JobRequirementAdd = catchAsync(async (req, res, next) => {
+    res.render('jobrequirementadd')
+})
+
+exports.technologyOfContactUsAdd = catchAsync(async (req, res, next) => {
+    res.render('technologyofcontctusadd')
+})
+
+
+exports.technologyAdd = catchAsync(async (req, res, next) => {
+    let data = await JobRequirements.findById({ _id: req.query.id });
+    res.render('technologyadd', {
+        data: data
+    })
+
+})
+
 exports.clientFeedbackForUpdate = catchAsync(async (req, res, next) => {
     let data = await ClientFeedback.findById({ _id: req.query.id });
     res.render('clientfeedback', {
@@ -165,8 +211,23 @@ exports.employeFeedbackForUpdate = catchAsync(async (req, res, next) => {
     res.render('employefeedbackupdate', {
         data: data
     })
-
 })
+
+exports.LookOurDesignUpdate = catchAsync(async (req, res, next) => {
+    let data = await LookAtOurDesign.findById({ _id: req.query.id });
+    res.render('lookourdesignupdate', {
+        data: data
+    })
+})
+
+exports.JobRequirementTable = catchAsync(async (req, res, next) => {
+
+    let data = await JobRequirements.find({});
+    res.render('jobrequirementtable', {
+        data: data
+    })
+})
+
 exports.employeUpdate = catchAsync(async (req, res, next) => {
 
     const data = await EmployeFeedback.findByIdAndUpdate(
@@ -174,7 +235,7 @@ exports.employeUpdate = catchAsync(async (req, res, next) => {
         {
             name: req.body.name,
             designation: req.body.designation,
-            image: req.file.filename,
+            image: req.body.image,
             description: req.body.description,
         },
         { new: true },
@@ -191,7 +252,7 @@ exports.clientUpdate = catchAsync(async (req, res, next) => {
             name: req.body.name,
             company: req.body.company,
             designation: req.body.designation,
-            image: req.file.filename,
+            image: req.body.image,
             description: req.body.description,
         },
         { new: true },

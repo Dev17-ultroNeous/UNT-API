@@ -26,8 +26,8 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-      
+          <div class="col-sm-6" >
+
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -46,6 +46,7 @@
         <!-- /.card-header -->
         <div class="card-body">
           <div id="jsGrid1">
+    
             <table  class="table table-striped">
                 <thead>
                   <tr>
@@ -55,6 +56,7 @@
                     <th scope="col">Designation</th>
                     <th scope="col">Description</th>
                   <th scope="col">image</th>
+                  <th scope="col"></th>
                   <th scope="col"></th>
                   </tr>
                 </thead>
@@ -67,18 +69,15 @@
                           <td><%= data[i].designation %></td>
                           <td><%= data[i].description %></td>
                        <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
-                       <td>  <ul class="list-inline m-0">
-                        <li class="list-inline-item">
-                            <a href="employefeedbackadd" class="btn btn-primary btn-sm rounded-0" id="add"  data-toggle="tooltip" data-placement="top" title="Add" data-id=<%= data[i]%>><i class="fa fa-table"></i></a>
-                        </li>
-                        <li class="list-inline-item">
+                       <td>
+                         <span class="icon">
                             <a href="employefeedbackupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                        </li>
-                    </ul></td>
-                         </td>
+                         </span>
+                       </td>
+                  <td>
+                    <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                   </td>
+                   
                         
                         </tr>
     

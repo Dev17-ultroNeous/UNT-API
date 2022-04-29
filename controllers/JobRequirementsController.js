@@ -7,33 +7,27 @@ const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const ejs = require("ejs");
+let alert = require('alert-node');
 
 exports.jobRequirements = catchAsync(async (req, res, next) => {
-    if (!req.body.name) {
-        return next(new catchAppError("Please enter all the field.", 405));
-    }
 
     let value = await JobRequirements.findOne({ name: req.body.name });
     if (value) {
-        return next(new catchAppError("This field is already added.", 405));
+        return alert("This field is already added.")
     } else {
         const data = await JobRequirements.create({
             name: req.body.name,
         });
-
-        res.status(200).json({
-            status: "success",
-            data,
-        });
+        if (data) {
+            res.redirect("./jobrequirementtable");
+        }
     }
 });
 
 exports.jobRequirementsDelete = catchAsync(async (req, res, next) => {
-    if (!req.body.id) {
-        return next(new catchAppError("Please enter id", 405));
-    }
 
-    const data = await JobRequirements.findOne({ _id: req.body.id });
+
+    const data = await JobRequirements.findByIdAndDelete({ _id: req.params.id });
 
     res.status(200).json({
         status: "success",
@@ -75,10 +69,9 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             },
             { new: true }
         );
-        res.status(200).json({
-            status: "success",
-            data,
-        });
+        if (data) {
+            res.redirect("./jobrequirementtable");
+        }
     } else if (value) {
         const data = await TechnologyOfJob.create({
             departmentName: value.name,
@@ -89,12 +82,11 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
                 count: count,
             },
         });
-        res.status(200).json({
-            status: "success",
-            data,
-        });
+        if (data) {
+            res.redirect("./jobrequirementtable");
+        }
     } else {
-        return next(new catchAppError("Please enter valid id.", 405));
+        return alert("Please enter valid id.")
     }
 });
 
@@ -234,26 +226,19 @@ exports.getContactUsData = catchAsync(async (req, res, next) => {
 });
 
 exports.technologiesOfContactUs = catchAsync(async (req, res, next) => {
-    if (!req.body.name || !req.body.type) {
-        return next(new catchAppError("Please enter all the fields", 405));
-    }
+
     const data = await TechnologiesOfContactUs.create({
         name: req.body.name,
         type: req.body.type,
     });
-    res.status(200).json({
-        status: "success",
-        data,
-    });
+    if (data) {
+        res.redirect("./technologyofcontactustable");
+    }
 });
 
 exports.technologiesOfContactUsDelete = catchAsync(async (req, res, next) => {
 
-    if (!req.body.id) {
-        return next(new catchAppError("Please enter id", 405));
-    }
-
-    const data = await TechnologiesOfContactUs.findOne({ _id: req.body.id });
+    const data = await TechnologiesOfContactUs.findByIdAndDelete({ _id: req.params.id });
 
     res.status(200).json({
         status: "success",
@@ -261,6 +246,22 @@ exports.technologiesOfContactUsDelete = catchAsync(async (req, res, next) => {
     });
 
 });
+
+exports.technologiesOfContactUsUpdate = catchAsync(async (req, res, next) => {
+
+    const data = await TechnologiesOfContactUs.findByIdAndUpdate({ _id: req.params.id },
+        {
+            name: req.body.name,
+            type: req.body.type
+        },
+        { new: true });
+
+    if (data) {
+        res.redirect("./technologyofcontactustable");
+    }
+
+});
+
 
 exports.getTechnologiesOfContactUs = catchAsync(async (req, res, next) => {
     const technology = await TechnologiesOfContactUs.find({ type: "technology" });

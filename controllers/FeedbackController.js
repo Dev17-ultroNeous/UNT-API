@@ -6,41 +6,51 @@ const { trim } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const multerStorage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
 
-const multerFilter = (req, file, cb) => {
-
-    if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-    } else {
-        cb(
-            new catchAppError("Not an image! Please upload only images.", 400),
-            false
-        );
+        cb(null, 'public/users/')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+        req.body.image = uniqueSuffix + file.originalname;
+        cb(null, uniqueSuffix + file.originalname)
     }
-};
+});
 
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter,
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
 });
-
 exports.uploadUserPhotos = upload.single("image");
 
-exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-    console.log(req.file);
-    if (!req.file) return next();
-    req.file.filename = `${req.body.name}-${Date.now()}.jpeg`;
+// exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
 
-    await sharp(req.file.buffer)
-        .resize(149, 149)
-        .flatten({ background: { r: 0, g: 0, b: 0, alpha: 0.5 } })
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/users/${req.file.filename}`);
+//     if (!req.file) return next();
+//     req.file.filename = `${req.body.name}-${Date.now()}.jpeg`;
 
-    next();
-});
+//     await sharp(req.file.buffer)
+//         .resize(149, 149, {
+//             fit: sharp.fit.contain,
+//             background: { r: 0, g: 0, b: 0, alpha: 0 }
+//         })
+//         .flatten({
+//             background: '#ffffff'
+//         })
+//         .toFormat("png")
+//         .png({ quality: 100 })
+//         .toFile(`public/users/${req.file.filename}`);
+
+//     next();
+// });
 
 exports.clientFeedback = catchAsync(async (req, res, next) => {
     if (
@@ -51,12 +61,7 @@ exports.clientFeedback = catchAsync(async (req, res, next) => {
     ) {
         return next(new catchAppError("Please enter all the fields", 405));
     }
-    if (req.file) {
-        req.body.image = `${req.file.filename}`;
-    }
-    if (!req.file) {
-        return next(new catchAppError("Please enter image", 405));
-    }
+
 
     const data = await ClientFeedback.create({
         name: req.body.name,
@@ -93,7 +98,8 @@ exports.getClientFeedbacks = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await ClientFeedback.countDocuments();
-    const data = await ClientFeedback.find({}).limit(limits).skip(skip);
+    const data = await ClientFeedback.find({}).limit(limits).skip(skip).sort([["createdAt", 1]])
+        .exec();
 
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/users/" + el.image;
@@ -110,7 +116,8 @@ exports.getEmployeFeedbacks = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await EmployeFeedback.countDocuments();
-    const data = await EmployeFeedback.find({}).limit(limits).skip(skip);
+    const data = await EmployeFeedback.find({}).limit(limits).skip(skip).sort([["createdAt", -1]])
+        .exec();
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/users/" + el.image;
     });

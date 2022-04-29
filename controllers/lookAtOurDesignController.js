@@ -64,6 +64,7 @@ exports.getLookAtOurDesign = catchAsync(async (req, res, next) => {
         status: "success",
         data,
     });
+
 });
 
 exports.LookAtOurDesignUpdate = catchAsync(async (req, res, next) => {
@@ -71,16 +72,29 @@ exports.LookAtOurDesignUpdate = catchAsync(async (req, res, next) => {
         return next(new catchAppError("Please enter id", 405));
     }
 
-    if (req.file) {
-        req.body.image = `${req.file.filename}`;
-    }
+
+    req.body.image = `${req.file.filename}`;
+
     const data = await LookAtOurDesign.findByIdAndUpdate(
         { _id: req.body.id },
-        { image: req.body.image, type: req.body.type },
+        {
+            image: req.body.image,
+            isImageShow: req.body.isImageShow,
+            sequence: req.body.sequence
+        },
         { new: true }
     );
+    if (data) {
+        res.redirect("./lookourdesigntable");
+    }
 
-    data.image = process.env.API_URL + "/public/design/" + data.image;
+});
+
+exports.LookAtOurDesignDelete = catchAsync(async (req, res, next) => {
+
+    const data = await LookAtOurDesign.findByIdAndDelete({ _id: req.params.id });
+
+
     res.status(200).json({
         status: "success",
         data,
