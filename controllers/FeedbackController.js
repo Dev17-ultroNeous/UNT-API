@@ -98,7 +98,7 @@ exports.getClientFeedbacks = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await ClientFeedback.countDocuments();
-    const data = await ClientFeedback.find({}).limit(limits).skip(skip).sort([["createdAt", 1]])
+    const data = await ClientFeedback.find({}).sort([["createdAt", -1]]).limit(limits).skip(skip)
         .exec();
 
     data.map(async (el) => {
@@ -116,7 +116,7 @@ exports.getEmployeFeedbacks = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await EmployeFeedback.countDocuments();
-    const data = await EmployeFeedback.find({}).limit(limits).skip(skip).sort([["createdAt", -1]])
+    const data = await EmployeFeedback.find({}).sort([["createdAt", -1]]).limit(limits).skip(skip)
         .exec();
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/users/" + el.image;

@@ -104,7 +104,7 @@ exports.clientAdd = catchAsync(async (req, res, next) => {
 })
 
 exports.clientTable = catchAsync(async (req, res, next) => {
-    const data = await ClientFeedback.find({});
+    const data = await ClientFeedback.find({}).sort([["createdAt", -1]])
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/users/" + el.image
 
@@ -115,7 +115,7 @@ exports.clientTable = catchAsync(async (req, res, next) => {
 })
 
 exports.employeTable = catchAsync(async (req, res, next) => {
-    const data = await EmployeFeedback.find({});
+    const data = await EmployeFeedback.find({}).sort([["createdAt", -1]])
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/users/" + el.image
     })
