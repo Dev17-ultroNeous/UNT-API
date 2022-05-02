@@ -43,9 +43,9 @@ router.get("/technologydelete", JobRequirementsController.technologyOfJobRequire
 router.post("/contactusdata", validateEmail,
     validatePhone, JobRequirementsController.contactUsData);
 
-router.post("/lookatourdesign", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.lookAtOurDesign)
+router.post("/lookatourdesign", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.lookAtOurDesign)
 router.post("/lookatourdesigndelete/:id", LookAtOurDesign.LookAtOurDesignDelete);
-router.post("/lookatourdesignupdate/:id", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.resizeDesignPhoto, LookAtOurDesign.LookAtOurDesignUpdate);
+router.post("/lookatourdesignupdate/:id", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.LookAtOurDesignUpdate);
 
 router.post("/technologiesofcontactus", JobRequirementsController.technologiesOfContactUs);
 router.post("/technologiesofcontactusdelete/:id", JobRequirementsController.technologiesOfContactUsDelete);

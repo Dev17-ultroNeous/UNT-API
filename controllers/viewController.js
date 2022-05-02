@@ -125,7 +125,7 @@ exports.employeTable = catchAsync(async (req, res, next) => {
 })
 
 exports.listOfServiceTable = catchAsync(async (req, res, next) => {
-    const data = await ListOfServices.find({});
+    const data = await ListOfServices.find({}).sort([["createdAt", -1]])
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/service/" + el.image;
     });
@@ -263,15 +263,14 @@ exports.clientUpdate = catchAsync(async (req, res, next) => {
         res.redirect("./clienttable");
     }
 })
+
 exports.listOfService = catchAsync(async (req, res, next) => {
     res.render('listofservice')
 })
+
 exports.listOfServiceForUpdate = catchAsync(async (req, res, next) => {
     let data = await ListOfServices.findById({ _id: req.query.id });
-
     data.image = process.env.API_URL + "/public/service/" + data.image;
-    data.icon = process.env.API_URL + "/public/icon/" + data.icon;
-
     res.render('listofserviceupdate', {
         data: data
     })

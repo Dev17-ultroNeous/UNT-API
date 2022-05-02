@@ -4,77 +4,34 @@ const ListOfServices = require("../models/listOfServicesModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const multerStorage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/service/')
+    },
+    filename: (req, file, cb) => {
 
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    } else {
-        cb(new AppError('Not an image! Please upload only images.', 400), false);
+        const uniqueSuffix = '-' + Date.now()
+        req.body.image = uniqueSuffix + '-' + file.originalname;
+        cb(null, uniqueSuffix + '-' + file.originalname)
     }
-};
+});
 
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
 });
+exports.uploadServicePhotos = upload.single("image");
 
-exports.uploadServicePhotos = upload.fields([
-    { name: 'image', maxCount: 1 },
-    { name: 'icon', maxCount: 1 }
-]);
-
-exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
-
-    // //icon
-    // req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
-    // await sharp(req.files.icon[0].buffer)
-    //     .toFormat("jpeg")
-    //     .jpeg({ quality: 100 })
-    //     .flatten({ background: '#1A1112' })
-    //     .toFile(`public/icon/${req.body.icon}`);
-
-
-
-    //image
-    req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.image[0].buffer)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/service/${req.body.image}`);
-
-    next();
-});
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-
-//         cb(null, 'public/service/')
-//     },
-//     filename: (req, file, cb) => {
-//         const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
-//         req.body.icon = uniqueSuffix + file.originalname;
-//         cb(null, uniqueSuffix + file.originalname)
-//     }
-// });
-
-// const uploads = multer({
-//     storage: storage,
-//     fileFilter: (req, file, cb) => {
-//         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-//             req.imageValid = true;
-//             cb(null, true);
-//         } else {
-//             req.imageValid = false;
-//             cb(null, false);
-//         }
-//     }
-// });
-
-// exports.uploadIconPhotos = uploads.single("image");
 
 exports.listOfServices = catchAsync(async (req, res, next) => {
-
-
 
     const data = await ListOfServices.create({
         name: req.body.name,

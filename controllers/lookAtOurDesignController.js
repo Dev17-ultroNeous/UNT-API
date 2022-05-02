@@ -31,17 +31,7 @@ const upload = multer({
 
 exports.uploadDesignPhotos = upload.single("image");
 
-exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
-    if (!req.file) return next();
-    req.body.image = `Design-${Date.now()}.jpeg`;
 
-    await sharp(req.file.buffer)
-        .resize(385, 302)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/design/${req.body.image}`);
-    next();
-});
 
 exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
 
@@ -69,8 +59,6 @@ exports.getLookAtOurDesign = catchAsync(async (req, res, next) => {
 });
 
 exports.LookAtOurDesignUpdate = catchAsync(async (req, res, next) => {
-
-
 
     const data = await LookAtOurDesign.findByIdAndUpdate(
         { _id: req.body.id },
