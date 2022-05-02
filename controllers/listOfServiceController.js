@@ -18,35 +18,58 @@ const upload = multer({
     fileFilter: multerFilter,
 });
 
-exports.uploadServicePhotos = upload.fields([
-    { name: "image", maxCount: 1 },
-    { name: "icon", maxCount: 1 },
-]);
+exports.uploadServicePhotos = upload.single('image')
+
 exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
     console.log(req.file);
     //icon
-    req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.icon[0].buffer)
-        .resize(45, 45)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .toFile(`public/icon/${req.body.icon}`);
+    // req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
+    // await sharp(req.files.icon[0].buffer)
+    //     .toFormat("jpeg")
+    //     .jpeg({ quality: 100 })
+    //     .toFile(`public/icon/${req.body.icon}`);
     //image
     req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.image[0].buffer)
-        .resize(200, 200)
+    await sharp(req.file.buffer)
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
         .toFile(`public/service/${req.body.image}`);
 
     next();
 });
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+
+        cb(null, 'public/service/')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+        req.body.image = uniqueSuffix + file.originalname;
+        cb(null, uniqueSuffix + file.originalname)
+    }
+});
+
+const uploads = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
+});
+
+exports.uploadIconPhotos = uploads.single("image");
 
 exports.listOfServices = catchAsync(async (req, res, next) => {
 
     const data = await ListOfServices.create({
         name: req.body.name,
         image: req.body.image,
+        link: req.body.link,
         icon: req.body.icon,
         description: req.body.description,
         longDescription: req.body.longDescription,

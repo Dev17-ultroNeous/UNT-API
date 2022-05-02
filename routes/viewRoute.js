@@ -41,8 +41,8 @@ router.get('/lookourdesignupdate', viewController.LookOurDesignUpdate)
 router.get("/lookourdesigntable", viewController.LookAtOurDesign);
 
 
-router.post("/listofserviceadd", listOfServicesController.uploadServicePhotos, listOfServicesController.resizeServicePhoto, listOfServicesController.listOfServices)
-router.post("/listofserviceupdate", listOfServicesController.uploadServicePhotos, listOfServicesController.resizeServicePhoto, listOfServicesController.ListOfServicesUpdate)
+router.post("/listofserviceadd", listOfServicesController.uploadIconPhotos, listOfServicesController.listOfServices)
+router.post("/listofserviceupdate", listOfServicesController.uploadIconPhotos, listOfServicesController.ListOfServicesUpdate)
 router.get('/listofservice', viewController.listOfService)
 router.get('/listofserviceupdate', viewController.listOfServiceForUpdate)
 router.get('/listofservicetable', viewController.listOfServiceTable)

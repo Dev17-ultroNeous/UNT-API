@@ -12,9 +12,7 @@ const contactUsSchema = new Schema({
         type: String
     },
     email: {
-        type: String,
-        unique: true,
-        require: true,
+        type: String
     },
     phone: {
         type: Number

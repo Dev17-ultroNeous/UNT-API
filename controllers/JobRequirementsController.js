@@ -151,7 +151,7 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
     // send mail with defined transport object
     const mailForAdmin = {
         from: "testnodemail@gmail.com",
-        to: "ajayhadiya1999@gmail.com",
+        to: "ajayhadiya19@gmail.com",
         subject: "Inquire",
         html:
             "<h2 style='font-weight:bold;'>Inquire Of UNT</h2>" +
