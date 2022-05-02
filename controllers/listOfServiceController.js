@@ -93,9 +93,7 @@ exports.getListOfServices = catchAsync(async (req, res, next) => {
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/service/" + el.image;
     });
-    data.map(async (el) => {
-        el.icon = process.env.API_URL + "/public/icon/" + el.icon;
-    });
+
     res.status(200).json({
         status: "success",
         data,
