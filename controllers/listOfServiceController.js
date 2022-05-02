@@ -1,4 +1,4 @@
-const multer = require("multer");
+const multer = require('multer')
 const sharp = require("sharp");
 const ListOfServices = require("../models/listOfServicesModel");
 const catchAsync = require("../utils/catchAsync");
@@ -7,30 +7,35 @@ const catchAppError = require("../utils/catchAppError");
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image")) {
+    if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
-        cb(new AppError("Not an image! Please upload only images.", 400), false);
+        cb(new AppError('Not an image! Please upload only images.', 400), false);
     }
 };
+
 const upload = multer({
     storage: multerStorage,
-    fileFilter: multerFilter,
+    fileFilter: multerFilter
 });
 
 exports.uploadServicePhotos = upload.fields([
     { name: 'image', maxCount: 1 },
-    { name: 'icon', maxCount: 3 }
+    { name: 'icon', maxCount: 1 }
 ]);
 
 exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
-    console.log(req.file);
+
     //icon
     req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
     await sharp(req.files.icon[0].buffer)
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
+        .flatten({ background: '#1A1112' })
         .toFile(`public/icon/${req.body.icon}`);
+
+
+
     //image
     req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
     await sharp(req.files.image[0].buffer)
@@ -68,6 +73,8 @@ exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
 // exports.uploadIconPhotos = uploads.single("image");
 
 exports.listOfServices = catchAsync(async (req, res, next) => {
+
+
 
     const data = await ListOfServices.create({
         name: req.body.name,

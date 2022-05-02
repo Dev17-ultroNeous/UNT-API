@@ -4,22 +4,29 @@ const LookAtOurDesign = require("../models/lookAtOurDesignModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const multerStorage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
 
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-    } else {
-        cb(
-            new catchAppError("Not an image! Please upload only images.", 400),
-            false
-        );
+        cb(null, 'public/design/')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+        req.body.image = uniqueSuffix + file.originalname;
+        cb(null, uniqueSuffix + file.originalname)
     }
-};
+});
 
 const upload = multer({
-    storage: multerStorage,
-    fileFilter: multerFilter,
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.imageValid = true;
+            cb(null, true);
+        } else {
+            req.imageValid = false;
+            cb(null, false);
+        }
+    }
 });
 
 exports.uploadDesignPhotos = upload.single("image");
@@ -31,7 +38,7 @@ exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
     await sharp(req.file.buffer)
         .resize(385, 302)
         .toFormat("jpeg")
-        .jpeg({ quality: 90 })
+        .jpeg({ quality: 100 })
         .toFile(`public/design/${req.body.image}`);
     next();
 });
