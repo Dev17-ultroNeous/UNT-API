@@ -26,13 +26,13 @@ exports.uploadServicePhotos = upload.fields([
 
 exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
 
-    //icon
-    req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.files.icon[0].buffer)
-        .toFormat("jpeg")
-        .jpeg({ quality: 100 })
-        .flatten({ background: '#1A1112' })
-        .toFile(`public/icon/${req.body.icon}`);
+    // //icon
+    // req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
+    // await sharp(req.files.icon[0].buffer)
+    //     .toFormat("jpeg")
+    //     .jpeg({ quality: 100 })
+    //     .flatten({ background: '#1A1112' })
+    //     .toFile(`public/icon/${req.body.icon}`);
 
 
 
