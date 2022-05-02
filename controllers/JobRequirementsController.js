@@ -91,18 +91,18 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
-    const id = req.body.id;
+    // const id = req.body.id;
 
-    let addData = await TechnologyOfJob.find({ departmentId: id });
-    console.log(addData);
-    let data = TechnologyOfJob.findOne(
-        { "adddata.award": "Golden Boot", "awards.numberOfTimes": 6 });
+    // let addData = await TechnologyOfJob.find({ departmentId: id });
+    // console.log(addData);
+    let data = TechnologyOfJob.find(
+        { "technology.technologyName": "react" });
     console.log(data);
 
-    // res.status(200).json({
-    //     status: "success",
-    //     data,
-    // });
+    res.status(200).json({
+        status: "success",
+        data,
+    });
 
 });
 

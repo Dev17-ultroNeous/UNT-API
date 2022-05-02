@@ -40,32 +40,32 @@ exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
 
     next();
 });
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
 
-        cb(null, 'public/service/')
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
-        req.body.icon = uniqueSuffix + file.originalname;
-        cb(null, uniqueSuffix + file.originalname)
-    }
-});
+//         cb(null, 'public/service/')
+//     },
+//     filename: (req, file, cb) => {
+//         const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
+//         req.body.icon = uniqueSuffix + file.originalname;
+//         cb(null, uniqueSuffix + file.originalname)
+//     }
+// });
 
-const uploads = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            req.imageValid = true;
-            cb(null, true);
-        } else {
-            req.imageValid = false;
-            cb(null, false);
-        }
-    }
-});
+// const uploads = multer({
+//     storage: storage,
+//     fileFilter: (req, file, cb) => {
+//         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+//             req.imageValid = true;
+//             cb(null, true);
+//         } else {
+//             req.imageValid = false;
+//             cb(null, false);
+//         }
+//     }
+// });
 
-exports.uploadIconPhotos = uploads.single("image");
+// exports.uploadIconPhotos = uploads.single("image");
 
 exports.listOfServices = catchAsync(async (req, res, next) => {
 
