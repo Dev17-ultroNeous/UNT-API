@@ -46,7 +46,7 @@ exports.listOfServices = catchAsync(async (req, res, next) => {
     }
 });
 exports.getListOfServices = catchAsync(async (req, res, next) => {
-    const data = await ListOfServices.find({});
+    const data = await ListOfServices.find({}).sort([["createdAt", -1]])
     data.map(async (el) => {
         el.image = process.env.API_URL + "/public/service/" + el.image;
     });

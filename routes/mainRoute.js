@@ -38,7 +38,8 @@ router.post("/jobrequirementsdelete/:id", JobRequirementsController.jobRequireme
 router.post("/jobrequirementsupdate", JobRequirementsController.jobRequirementsUpdate);
 
 router.post("/technologyadd", validateTechnology, JobRequirementsController.technologyOfJobRequirements)
-router.get("/technologydelete", JobRequirementsController.technologyOfJobRequirementsDelete)
+router.post("/technologydelete", JobRequirementsController.technologyOfJobRequirementsDelete)
+router.post("/technologyupdate", JobRequirementsController.technologyOfJobRequirementsUpdate)
 
 router.post("/contactusdata", validateEmail,
     validatePhone, JobRequirementsController.contactUsData);

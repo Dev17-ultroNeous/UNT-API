@@ -91,27 +91,68 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
-    // const id = req.body.id;
+    const id = req.body.id;
+    let technologyId = req.body.technologyId
 
-    // let addData = await TechnologyOfJob.find({ departmentId: id });
-    // console.log(addData);
-    let data = TechnologyOfJob.find(
-        { "technology.technologyName": "react" });
-    console.log(data);
+
+    let addData = await TechnologyOfJob.findOne({ departmentId: id });
+
+    let array = addData.technology
+
+    const checkValue = array.filter((function (el) {
+        return JSON.stringify(el._id) !== JSON.stringify(technologyId);
+    }));
+
+    const data = await TechnologyOfJob.findOneAndUpdate(
+        { departmentId: id },
+        {
+            technology: checkValue
+        },
+        { new: true }
+    );
 
     res.status(200).json({
         status: "success",
         data,
     });
+});
 
+
+exports.technologyOfJobRequirementsUpdate = catchAsync(async (req, res, next) => {
+    const id = req.body.id;
+    let technologyId = req.body.technologyId
+    let technologyName = req.body.technologyName;
+    let count = req.body.count;
+    let addData = await TechnologyOfJob.findOne({ departmentId: id });
+
+    let array = addData.technology
+
+    const checkValue = array.filter((function (el) {
+        return JSON.stringify(el._id) === JSON.stringify(technologyId);
+    }));
+
+    if (checkValue.technologyName !== technologyName) {
+        const data = await TechnologyOfJob.findOneAndUpdate(
+            { departmentId: id },
+            {
+                fieldCount: checkValue.technology.length,
+                technology: checkValue.technologyName,
+            },
+            { new: true }
+        );
+    }
+    res.status(200).json({
+        status: "success",
+        data,
+    });
 });
 
 
 
 exports.getJobRequirements = catchAsync(async (req, res, next) => {
-    let data = await JobRequirements.find({}).sort([["createdAt", -1]])
+    let data = await JobRequirements.find({}).sort([["createdAt", 1]])
 
-    let technology = await TechnologyOfJob.find({}).sort([["createdAt", -1]])
+    let technology = await TechnologyOfJob.find({}).sort([["createdAt", 1]])
     res.status(200).json({
         data,
         technology,
