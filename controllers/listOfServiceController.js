@@ -18,19 +18,22 @@ const upload = multer({
     fileFilter: multerFilter,
 });
 
-exports.uploadServicePhotos = upload.single('image')
+exports.uploadServicePhotos = upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'icon', maxCount: 3 }
+]);
 
 exports.resizeServicePhoto = catchAsync(async (req, res, next) => {
     console.log(req.file);
     //icon
-    // req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
-    // await sharp(req.files.icon[0].buffer)
-    //     .toFormat("jpeg")
-    //     .jpeg({ quality: 100 })
-    //     .toFile(`public/icon/${req.body.icon}`);
+    req.body.icon = `icon-${req.body.name}-${Date.now()}.jpeg`;
+    await sharp(req.files.icon[0].buffer)
+        .toFormat("jpeg")
+        .jpeg({ quality: 100 })
+        .toFile(`public/icon/${req.body.icon}`);
     //image
     req.body.image = `image-${req.body.name}-${Date.now()}.jpeg`;
-    await sharp(req.file.buffer)
+    await sharp(req.files.image[0].buffer)
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
         .toFile(`public/service/${req.body.image}`);
@@ -44,7 +47,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
-        req.body.image = uniqueSuffix + file.originalname;
+        req.body.icon = uniqueSuffix + file.originalname;
         cb(null, uniqueSuffix + file.originalname)
     }
 });

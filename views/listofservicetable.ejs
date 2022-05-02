@@ -56,6 +56,7 @@
                   <th scope="col">image</th>
                   <th scope="col">icon</th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -67,18 +68,14 @@
                           <td><%= data[i].link %></td>
                        <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
                        <td><img src="<%= data[i].icon %>" style="width: 2.5rem; height: 2.5rem;"></td>
-                       <td>  <ul class="list-inline m-0">
-                        <li class="list-inline-item">
-                            <a href="listofservice" class="btn btn-primary btn-sm rounded-0" id="add"  data-toggle="tooltip" data-placement="top" title="Add" data-id=<%= data[i]%>><i class="fa fa-table"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="listofserviceupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                        </li>
-                    </ul></td>
-                         </td>
+                       <td>
+                        <span class="icon">
+                           <a href="listofserviceupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                        </span>
+                      </td>
+                 <td>
+                   <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                  </td>
                         
                         </tr>
     
