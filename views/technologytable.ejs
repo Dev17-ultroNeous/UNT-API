@@ -33,7 +33,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
               padding-right: 10px;
-              padding-left: 10px;"><a href="jobrequirementadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
+              padding-left: 10px;"><a href="jobrequirementtable" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
        
             </ol>
           </div>
@@ -141,7 +141,7 @@ $(document).on("click", "#edit", async function () {
     }
     console.log(data);
     var request = {
-        "url": `http://localhost:8000/admin/technologydelete`,
+        "url": `http://localhost:8000/admin/technologyupdate`,
         "method": "post",
         "data":data
     }
