@@ -128,22 +128,24 @@ exports.technologyOfJobRequirementsUpdate = catchAsync(async (req, res, next) =>
     let array = addData.technology
 
     const checkValue = array.filter((function (el) {
-        return JSON.stringify(el._id) === JSON.stringify(technologyId);
+        return JSON.stringify(el._id) !== JSON.stringify(technologyId);
     }));
 
-    if (checkValue.technologyName !== technologyName) {
-        const data = await TechnologyOfJob.findOneAndUpdate(
-            { departmentId: id },
-            {
-                fieldCount: checkValue.technology.length,
-                technology: checkValue.technologyName,
-            },
-            { new: true }
-        );
-    }
+    checkValue.push({ technologyName, count });
+    console.log(checkValue);
+
+    const data = await TechnologyOfJob.findOneAndUpdate(
+        { departmentId: id },
+        {
+
+            technology: checkValue,
+        },
+        { new: true }
+    );
+
     res.status(200).json({
         status: "success",
-        data,
+        data
     });
 });
 
@@ -160,9 +162,6 @@ exports.getJobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.contactUsData = catchAsync(async (req, res, next) => {
-    if (!req.body.name || !req.body.email || !req.body.phone) {
-        return next(new catchAppError("Please enter all the field.", 405));
-    }
 
     const data = await ContactUs.create({
         checklist: req.body.checklist,

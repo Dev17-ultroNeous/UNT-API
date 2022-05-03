@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | jsGrid</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- jsGrid -->
+  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid.min.css">
+  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid-theme.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+</head>
+<body >
+   
+    <%- include('sidebar'); -%>
+  <!-- /.navbar --
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+      
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
+              padding-right: 10px;
+              padding-left: 10px;"><a href="jobrequirementadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
+       
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+  
+        <!-- /.card-header -->
+        <div class="card-body">
+          <div id="jsGrid1">
+            <table  class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">departmentName</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(var i = 0; i < data.length; i++) { %>
+                 <tr> <td style="display: none;" class="id"><%= data[i].departmentId %></td>
+                       <td><li style="list-style-type:none;"><b><%= data[i].departmentName %></b></li>
+
+           
+                    <% for(var index = 0; index < data[i].technology.length; index++) { %>
+                     
+                        <li><%=  data[i].technology[index].technologyName %>
+                        <%=  data[i].technology[index].count %>   <span class="icon">
+                               <a  id="edit" data-toggle="tooltip" data-placement="top" title="Edit" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>><i class="fa fa-edit"></i></a>
+                            </span>
+                     
+                       <a  id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>> <i class="fa fa-trash"></i></a></li> 
+
+                        <% } %> 
+
+                        <% } %> 
+                </td></tr>
+                    
+                 
+                </tbody>
+              </table>
+         
+          </div>
+        </div>
+    
+  <!-- /.content-wrapper -->
+
+  <script src="/public/js/index.js"></script>
+
+<!-- jQuery -->
+<script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jsGrid -->
+<script src="../../plugins/jsgrid/demos/db.js"></script>
+<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
+<!-- Page specific script -->
+<script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+ $(document).on("click", "#deleted", async function () {
+    var technologyId = $(this).attr("technology-id")
+    console.log(technologyId);
+    var id = $(this).attr("data-id")
+    console.log(id);
+    let data = {
+      id: id,
+      technologyId
+    }
+    console.log(data);
+    var request = {
+        "url": `http://localhost:8000/admin/technologydelete`,
+        "method": "post",
+        "data":data
+    }
+
+    if (confirm("Do you really want to delete this record?")) {
+        $.ajax(request).done(function (response) {
+            alert("Data Deleted Successfully!");
+            location.reload();
+    
+        })
+
+    }
+
+})
+
+$(document).on("click", "#edit", async function () {
+    var technologyId = $(this).attr("technology-id")
+    console.log(technologyId);
+    var id = $(this).attr("data-id")
+    console.log(id);
+    let data = {
+      id: id,
+      technologyId
+    }
+    console.log(data);
+    var request = {
+        "url": `http://localhost:8000/admin/technologydelete`,
+        "method": "post",
+        "data":data
+    }
+
+    if (confirm("Do you really want to delete this record?")) {
+        $.ajax(request).done(function (response) {
+            alert("Data Deleted Successfully!");
+            location.reload();
+    
+        })
+
+    }
+
+})
+</script>
+</body>
+</html>

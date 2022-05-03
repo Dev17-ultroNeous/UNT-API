@@ -142,6 +142,14 @@ exports.contactUsTable = catchAsync(async (req, res, next) => {
     })
 })
 
+exports.technologyTable = catchAsync(async (req, res, next) => {
+    const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
+
+    res.render('technologytable', {
+        data: data,
+    })
+})
+
 exports.technologyOfContactUsTable = catchAsync(async (req, res, next) => {
     const data = await TechnologiesOfContactUs.find({}).sort([["createdAt", -1]]);
 

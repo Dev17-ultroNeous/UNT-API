@@ -4,36 +4,43 @@ const LookAtOurDesign = require("../models/lookAtOurDesignModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
 
-        cb(null, 'public/design/')
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = `${req.body.name}` + '-' + Date.now()
-        req.body.image = uniqueSuffix + file.originalname;
-        cb(null, uniqueSuffix + file.originalname)
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true);
+    } else {
+        cb(new AppError('Not an image! Please upload only images.', 400), false);
     }
-});
+};
 
 const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            req.imageValid = true;
-            cb(null, true);
-        } else {
-            req.imageValid = false;
-            cb(null, false);
-        }
-    }
+    storage: multerStorage,
+    fileFilter: multerFilter
 });
+
 
 exports.uploadDesignPhotos = upload.single("image");
 
+
+exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
+    console.log(req.file);
+    req.body.image = `${req.body.name}-${Date.now()}.jpeg`;
+
+    await sharp(req.file.buffer)
+        .toFormat("png")
+        .png({ quality: 100 })
+        .toFile(`public/design/${req.body.image}`);
+
+    next();
+});
+
 exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
 
+    console.log(req.body)
     const data = await LookAtOurDesign.create({
+        name: req.body.name,
         image: req.body.image,
     });
     if (data) {
