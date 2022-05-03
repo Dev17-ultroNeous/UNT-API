@@ -25,7 +25,7 @@ exports.uploadDesignPhotos = upload.single("image");
 
 
 exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
-    console.log(req.file);
+
     req.body.image = `${req.body.name}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
@@ -38,7 +38,6 @@ exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
 
 exports.lookAtOurDesign = catchAsync(async (req, res, next) => {
 
-    console.log(req.body)
     const data = await LookAtOurDesign.create({
         name: req.body.name,
         image: req.body.image,
