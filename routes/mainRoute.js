@@ -42,7 +42,7 @@ router.post("/technologydelete", JobRequirementsController.technologyOfJobRequir
 router.post("/technologyupdate", JobRequirementsController.technologyOfJobRequirementsUpdate)
 
 router.post("/contactusdata", validateEmail,
-    validatePhone, JobRequirementsController.contactUsData);
+    JobRequirementsController.contactUsData);
 
 router.post("/lookatourdesign", LookAtOurDesign.uploadDesignPhotos, LookAtOurDesign.lookAtOurDesign)
 router.post("/lookatourdesigndelete/:id", LookAtOurDesign.LookAtOurDesignDelete);
