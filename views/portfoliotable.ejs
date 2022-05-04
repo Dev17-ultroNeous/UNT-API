@@ -50,11 +50,11 @@
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">clientName</th>
-                    <th scope="col">projectName</th>
+                    <th scope="col">ClientName</th>
+                    <th scope="col">ProjectName</th>
                     <th scope="col">Link</th>
-                  <th scope="col">image</th>
-                  <th scope="col">type</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Image</th>
                   <th scope="col"></th>
               
                   </tr>
@@ -71,7 +71,7 @@
                        <!-- <td><img src="<%= data[i].link %>" style="width: 2.5rem; height: 2.5rem;"></td> -->
                        <td>
                         <span class="icon">
-                           <a href="technologyadd?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Technology Edit"><i class="fa fa-edit"></i></a>
+                           <a href="portfolioupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
                         </span>
                  
                    <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
@@ -109,21 +109,15 @@
 
 $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
-
     var request = {
-        "url": `http://localhost:8000/admin/listofservicesdelete/${id}`,
+        "url": `http://localhost:8000/admin/portfoliodelete/${id}`,
         "method": "post"
     }
-
     if (confirm("Do you really want to delete this record?")) {
-        $.ajax(request).done(function (response) {
-          
-            location.reload();
-    
+        $.ajax(request).done(function (response) {          
+            location.reload();    
         })
-
     }
-
 })
 
 </script>

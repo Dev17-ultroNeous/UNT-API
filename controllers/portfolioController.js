@@ -1,34 +1,40 @@
-const multer = require('multer')
+const multer = require("multer");
 const sharp = require("sharp");
-const Portfolio = require("../models/portfolioModel")
+const Portfolio = require("../models/portfolioModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'public/portfolio/')
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = `${req.body.clientName}-${Date.now()}`;
-        req.body.image = uniqueSuffix + '-' + file.originalname;
-        cb(null, uniqueSuffix + '-' + file.originalname)
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith('image')) {
+        cb(null, true);
+    } else {
+        cb(new AppError('Not an image! Please upload only images.', 400), false);
     }
-});
+};
 
 const upload = multer({
-    storage: storage,
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            req.imageValid = true;
-            cb(null, true);
-        } else {
-            req.imageValid = false;
-            cb(null, false);
-        }
-    }
+    storage: multerStorage,
+    fileFilter: multerFilter
 });
+
+
 exports.uploadPortfolioPhotos = upload.single("image");
 
+
+exports.resizePortfolioPhoto = catchAsync(async (req, res, next) => {
+
+    req.body.image = `${req.body.clientName}-${Date.now()}.jpeg`;
+
+    await sharp(req.file.buffer)
+        .toFormat("jpeg")
+        .jpeg({ quality: 100 })
+        .toFile(`public/portfolio/${req.body.image}`);
+
+    next();
+});
 
 exports.portfolioAdd = catchAsync(async (req, res, next) => {
 
@@ -38,10 +44,9 @@ exports.portfolioAdd = catchAsync(async (req, res, next) => {
         image: req.body.image,
         link: req.body.link,
         type: req.body.type,
-
     });
     if (data) {
-        res.redirect('./portfoliotable')
+        res.redirect("./portfoliotable");
     }
 });
 exports.getPortfolio = catchAsync(async (req, res, next) => {
@@ -65,9 +70,36 @@ exports.getPortfolio = catchAsync(async (req, res, next) => {
 
     res.status(200).json({
         status: "success",
-        mobileApp,
-        webApp,
-        platform,
-        other
+        data: {
+            mobileApp,
+            webApp,
+            platform,
+            other,
+        }
     });
+});
+
+exports.portfolioDelete = catchAsync(async (req, res, next) => {
+    const data = await Portfolio.findByIdAndDelete({ _id: req.params.id });
+    res.status(200).json({
+        status: "success",
+        data,
+    });
+});
+
+exports.portfolioUpdate = catchAsync(async (req, res, next) => {
+    const data = await Portfolio.findByIdAndUpdate(
+        { _id: req.body.id },
+        {
+            clientName: req.body.clientName,
+            projectName: req.body.projectName,
+            image: req.body.image,
+            link: req.body.link,
+            type: req.body.type,
+        },
+        { new: true }
+    );
+    if (data) {
+        res.redirect("./portfoliotable");
+    }
 });

@@ -54,7 +54,8 @@ router.post("/technologiesofcontactusdelete/:id", JobRequirementsController.tech
 router.post("/technologiesofcontactusupdate/:id", JobRequirementsController.technologiesOfContactUsUpdate);
 
 router.post("/portfolio", portfolioController.uploadPortfolioPhotos, portfolioController.portfolioAdd);
-
+router.post("/portfoliodelete/:id", portfolioController.portfolioDelete);
+router.post("/portfolioupdate/:id", portfolioController.portfolioUpdate);
 
 router.post("/signup", validatePassword, userController.signUp);
 router.post("/signin", validateEmail, validatePassword,

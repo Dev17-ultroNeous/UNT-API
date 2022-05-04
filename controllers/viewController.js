@@ -268,6 +268,15 @@ exports.technologyOfContactUsUpdate = catchAsync(async (req, res, next) => {
         data: data,
     })
 })
+exports.portfolioUpdate = catchAsync(async (req, res, next) => {
+    const data = await Portfolio.findById({ _id: req.query.id });
+
+    data.image = process.env.API_URL + "/public/portfolio/" + data.image;
+    res.render('portfolioupdate', {
+        data: data,
+    })
+})
+
 exports.JobRequirementTable = catchAsync(async (req, res, next) => {
 
     let data = await JobRequirements.find({});

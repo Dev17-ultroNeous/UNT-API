@@ -15,9 +15,11 @@ router.post('/technologyadd', JobRequirementsController.technologyOfJobRequireme
 
 router.get('/index', viewController.getView)
 
+router.get('/portfolioupdate', viewController.portfolioUpdate)
 router.get('/portfolioadd', viewController.portfolioAdd)
 router.get('/portfoliotable', viewController.portfolioTable)
-router.post('/portfolioadd', portfolioController.portfolioAdd)
+router.post('/portfolioadd', portfolioController.uploadPortfolioPhotos, portfolioController.resizePortfolioPhoto, portfolioController.portfolioAdd)
+router.post('/portfolioupdate', portfolioController.uploadPortfolioPhotos, portfolioController.resizePortfolioPhoto, portfolioController.portfolioUpdate)
 
 router.get('/contactustable', viewController.contactUsTable)
 router.get('/contactustable/:page', viewController.contactUsTable, viewController.contactUsTablePage)
