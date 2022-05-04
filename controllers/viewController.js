@@ -8,6 +8,7 @@ const EmployeFeedback = require("../models/employeFeedbackModel")
 const ListOfServices = require("../models/listOfServicesModel");
 const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const TechnologiesOfContactUs = require("../models/technologiesOfContactUsModel");
+const Portfolio = require("../models/portfolioModel")
 
 const multer = require("multer");
 const sharp = require("sharp");
@@ -42,8 +43,6 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
         } else {
             alert("Invaild Details")
         }
-    } else {
-        alert("Invaild Details")
     }
 
 
@@ -135,14 +134,38 @@ exports.listOfServiceTable = catchAsync(async (req, res, next) => {
     })
 })
 exports.contactUsTable = catchAsync(async (req, res, next) => {
+    var perPage = 10;
+    var page = req.params.page;
 
-
-    const data = await ContactUs.find({}).limit(10)
+    const data = await ContactUs.find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage).exec()
+    let count = ContactUs.countDocuments({}).exec()
 
     res.render('contactustable', {
         data: data,
+        current: page,
+        pages: Math.ceil(count / perPage)
     })
 })
+
+exports.contactUsTablePage = catchAsync(async (req, res, next) => {
+    var perPage = 1;
+    var page = req.params.page;
+
+    const data = await ContactUs.find({})
+        .skip((perPage * page) - perPage)
+        .limit(perPage).exec()
+    let count = ContactUs.countDocuments({}).exec()
+
+    res.render('contactustable', {
+        data: data,
+        current: page,
+        pages: Math.ceil(count / perPage)
+    })
+})
+
+
 
 exports.technologyTable = catchAsync(async (req, res, next) => {
     const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
@@ -191,6 +214,19 @@ exports.JobRequirementAdd = catchAsync(async (req, res, next) => {
 
 exports.technologyOfContactUsAdd = catchAsync(async (req, res, next) => {
     res.render('technologyofcontctusadd')
+})
+exports.portfolioAdd = catchAsync(async (req, res, next) => {
+    res.render('portfolioadd')
+})
+
+exports.portfolioTable = catchAsync(async (req, res, next) => {
+    let data = await Portfolio.find({});
+    data.map(async (el) => {
+        el.image = process.env.API_URL + "/public/portfolio/" + el.image;
+    });
+    res.render('portfoliotable', {
+        data: data
+    })
 })
 
 

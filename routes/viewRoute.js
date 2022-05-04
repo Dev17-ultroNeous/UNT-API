@@ -3,9 +3,8 @@ const router = express.Router();
 const viewController = require("../controllers/viewController")
 const listOfServicesController = require("../controllers/listOfServiceController")
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
-const JobRequirements = require("../models/JobRequirementsModel");
-const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const JobRequirementsController = require("../controllers/JobRequirementsController");
+const portfolioController = require("../controllers/portfolioController")
 
 router.get("/login", viewController.loginPage, viewController.postloginPage)
 router.post("/table", viewController.postloginPage)
@@ -16,10 +15,14 @@ router.post('/technologyadd', JobRequirementsController.technologyOfJobRequireme
 
 router.get('/index', viewController.getView)
 
+router.get('/portfolioadd', viewController.portfolioAdd)
+router.get('/portfoliotable', viewController.portfolioTable)
+router.post('/portfolioadd', portfolioController.portfolioAdd)
 
 router.get('/contactustable', viewController.contactUsTable)
-router.get('/jobrequirementtable', viewController.JobRequirementTable)
+router.get('/contactustable/:page', viewController.contactUsTable, viewController.contactUsTablePage)
 
+router.get('/jobrequirementtable', viewController.JobRequirementTable)
 router.post("/employeadd", viewController.uploadUserPhotos, viewController.employeAdd)
 router.post("/employeupdate", viewController.uploadUserPhotos, viewController.employeUpdate)
 router.get('/employetable', viewController.employeTable)

@@ -20,12 +20,9 @@ const listOfServicesSchema = new Schema({
     },
     description: {
         type: String,
-        trim: true
+
     },
-    longDescription: {
-        type: String,
-        trim: true
-    }
+
 
 
 }, { timestamps: true })

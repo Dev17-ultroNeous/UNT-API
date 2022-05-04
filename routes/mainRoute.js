@@ -6,6 +6,7 @@ const userController = require("../controllers/userController");
 const listOfServices = require("../controllers/listOfServiceController")
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
 const authController = require("../controllers/authController")
+const portfolioController = require("../controllers/portfolioController")
 const {
     validatePassword,
     validateEmail,
@@ -52,9 +53,14 @@ router.post("/technologiesofcontactus", JobRequirementsController.technologiesOf
 router.post("/technologiesofcontactusdelete/:id", JobRequirementsController.technologiesOfContactUsDelete);
 router.post("/technologiesofcontactusupdate/:id", JobRequirementsController.technologiesOfContactUsUpdate);
 
+router.post("/portfolio", portfolioController.uploadPortfolioPhotos, portfolioController.portfolioAdd);
+
+
 router.post("/signup", validatePassword, userController.signUp);
 router.post("/signin", validateEmail, validatePassword,
     userController.signIn);
+
+router.get("/getportfolio", portfolioController.getPortfolio);
 
 router.get("/getclientfeedback", FeedbackController.getClientFeedbacks);
 router.get("/getemployefeedback", FeedbackController.getEmployeFeedbacks);

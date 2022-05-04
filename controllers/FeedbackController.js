@@ -162,8 +162,6 @@ exports.clientFeedbackUpdate = catchAsync(async (req, res, next) => {
 exports.employeFeedbackDelete = catchAsync(async (req, res, next) => {
     const id = req.params.id
     const data = await EmployeFeedback.findByIdAndDelete({ _id: id });
-
-
     res.status(200).json({
         status: "success",
         data,

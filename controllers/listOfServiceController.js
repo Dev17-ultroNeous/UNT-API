@@ -39,7 +39,7 @@ exports.listOfServices = catchAsync(async (req, res, next) => {
         link: req.body.link,
         icon: req.body.icon,
         description: req.body.description,
-        longDescription: req.body.longDescription,
+
     });
     if (data) {
         res.redirect("./listofservicetable");
@@ -58,8 +58,6 @@ exports.getListOfServices = catchAsync(async (req, res, next) => {
 });
 
 exports.ListOfServicesDelete = catchAsync(async (req, res, next) => {
-
-
     const data = await ListOfServices.findByIdAndDelete({ _id: req.params.id });
 
     res.status(200).json({
