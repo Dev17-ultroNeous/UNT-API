@@ -70,7 +70,7 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             { new: true }
         );
         if (data) {
-            res.redirect("./jobrequirementtable");
+            res.redirect("./technologytable");
         }
     } else if (value) {
         const data = await TechnologyOfJob.create({
@@ -83,7 +83,7 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             },
         });
         if (data) {
-            res.redirect("./jobrequirementtable");
+            res.redirect("./technologytable");
         }
     } else {
         return alert("Please enter valid id.")
@@ -132,7 +132,6 @@ exports.technologyOfJobRequirementsUpdate = catchAsync(async (req, res, next) =>
     }));
 
     checkValue.push({ technologyName, count });
-    console.log(checkValue);
 
     const data = await TechnologyOfJob.findOneAndUpdate(
         { departmentId: id },

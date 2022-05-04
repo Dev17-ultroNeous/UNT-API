@@ -134,26 +134,13 @@
     <script src="../../plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- jquery-validation -->
-    <script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
-    <script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
+    <!-- jsGrid -->
+    <script src="../../plugins/jsgrid/demos/db.js"></script>
+    <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
     <!-- Page specific script -->
-
-    <script>
-      $("#quickForm").submit(async function (event) {
-        event.preventDefault();
-
-        var unindexed_array = $(this).serializeArray();
-        var data = {};
-
-        $.map(unindexed_array, function (n, i) {
-          data[n["name"]] = n["value"];
-        });
-      });
-    </script>
   </body>
 </html>

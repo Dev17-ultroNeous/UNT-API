@@ -61,7 +61,7 @@ router.get("/getemployefeedback", FeedbackController.getEmployeFeedbacks);
 router.get("/getlistofservices", listOfServices.getListOfServices);
 router.get("/getjobrequirements", JobRequirementsController.getJobRequirements);
 router.get("/gettechnologiesofcontactus", JobRequirementsController.getTechnologiesOfContactUs);
-router.get("/getcontactusdata", JobRequirementsController.getContactUsData);
+router.post("/getcontactusdata", JobRequirementsController.getContactUsData);
 router.get("/getlookatourdesign", LookAtOurDesign.getLookAtOurDesign);
 
 

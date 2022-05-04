@@ -114,7 +114,7 @@ $(document).on("click", "#deleted", async function () {
 
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
-            alert("Data Deleted Successfully!");
+       
             location.reload();
     
         })

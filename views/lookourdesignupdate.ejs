@@ -92,8 +92,8 @@
                           type="file"
                           name="image"
                           class="form-control"
-                          id="exampleInputPassword1"
                           value="<%= data.image %>"
+                          required
                         />
                       </div>
                       <div class="form-group">
@@ -102,7 +102,6 @@
                           type="text"
                           name="isImageShow"
                           class="form-control"
-                          id="exampleInputPassword1"
                           value="<%= data.isImageShow %>"
                         />
                       </div>
@@ -169,17 +168,6 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Page specific script -->
 
-    <script>
-      $("#quickForm").submit(async function (event) {
-        event.preventDefault();
-
-        var unindexed_array = $(this).serializeArray();
-        var data = {};
-
-        $.map(unindexed_array, function (n, i) {
-          data[n["name"]] = n["value"];
-        });
-      });
-    </script>
+    <script></script>
   </body>
 </html>

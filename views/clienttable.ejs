@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid-theme.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
+<style>
+ 
+</style>
 </head>
 <body >
    
@@ -49,12 +51,12 @@
             <table  class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Company</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">Description</th>
-                  <th scope="col">image</th>
+                    <th scope="col" class="font">#</th>
+                    <th scope="col" class="font">Name</th>
+                    <th scope="col" class="font">Company</th>
+                    <th scope="col" class="font">Designation</th>
+                    <th scope="col" class="font">Description</th>
+                  <th scope="col" class="font">image</th>
                   <th scope="col"></th>
                   </tr>
                 </thead>
@@ -72,10 +74,7 @@
                           <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
                        </td>
                        <td>
-                            <a href="clientfeedback?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                       
-                      
-                   
+                            <a href="clientfeedback?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>                                                          
                          </td>
                         
                         </tr>
@@ -90,9 +89,7 @@
   <!-- /.content-wrapper -->
 
   <script src="/public/js/index.js"></script>
-
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- jsGrid -->
@@ -118,7 +115,7 @@ $(document).on("click", "#deleted", async function () {
 
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
-            alert("Data Deleted Successfully!");
+          
             location.reload();
     
         })

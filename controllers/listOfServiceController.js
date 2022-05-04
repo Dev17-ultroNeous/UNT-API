@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
 
-        const uniqueSuffix = '-' + Date.now()
+        const uniqueSuffix = Date.now()
         req.body.image = uniqueSuffix + '-' + file.originalname;
         cb(null, uniqueSuffix + '-' + file.originalname)
     }

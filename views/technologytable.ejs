@@ -8,13 +8,15 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
   <!-- jsGrid -->
-  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid.min.css">
-  <link rel="stylesheet" href="../../plugins/jsgrid/jsgrid-theme.min.css">
+  <link rel="stylesheet" href="/plugins/jsgrid/jsgrid.min.css">
+  <link rel="stylesheet" href="/plugins/jsgrid/jsgrid-theme.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/dist/css/adminlte.min.css">
 
+
+  
 </head>
 <body >
    
@@ -49,32 +51,85 @@
             <table  class="table table-striped">
                 <thead>
                   <tr>
-                    <th scope="col">departmentName</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    
+                
+                    <!-- <% for(var i = 0; i < value.length; i++) { %>
+                    <%= value[i].name %></th>
+                    <% } %>  -->
                   </tr>
                 </thead>
                 <tbody>
+                  <% for(var i = 0; i < value.length; i++) { %>
                   <% for(var i = 0; i < data.length; i++) { %>
-                 <tr> <td style="display: none;" class="id"><%= data[i].departmentId %></td>
-                       <td><li style="list-style-type:none;"><b><%= data[i].departmentName %></b></li>
-
-           
-                    <% for(var index = 0; index < data[i].technology.length; index++) { %>
-                     
-                        <li><%=  data[i].technology[index].technologyName %>
-                        <%=  data[i].technology[index].count %>   <span class="icon">
-                               <a  id="edit" data-toggle="tooltip" data-placement="top" title="Edit" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>><i class="fa fa-edit"></i></a>
-                            </span>
-                     
-                       <a  id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>> <i class="fa fa-trash"></i></a></li> 
-
-                        <% } %> 
-
-                        <% } %> 
-                </td></tr>
+                 <tr> 
+                       <td><b style="font-size: 24px;">  <%= value[i].name %></b></td>
                     
+                 </tr>
+                    <% for(var index = 0; index < data[i].technology.length; index++) { %>
+                <tr>
+          
+                  <td><%=  data[i].technology[index].technologyName %>
+                  (<%=  data[i].technology[index].count %>)  </td>          
+                 
+                  <td>
+                    <span class="icon">
+                      <a class="btn btn-success btn-sm rounded-0"  data-toggle="modal" data-target="#exampleModal" id="edit" data-toggle="tooltip" data-placement="top" title="Edit" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>><i class="fa fa-edit"></i></a>                    
+              <a  class="btn btn-danger btn-sm rounded-0"  id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>> <i class="fa fa-trash"></i></a></li> 
+           </span>
+              </td>
+
+                        <% } %> 
+                        <% } %> 
+                        <% } %> 
+               </tr>
+                <center>
+          <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form action="/admin/jobrequirementadd" method="post">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" style="margin-right: 24rem;">TechnologyName</label>
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="technologyName"
+                      placeholder="Enter TechnologyName"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  style="margin-right: 24rem;">Count</label>
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="count"
+                      placeholder="Enter Count"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- /.card-body -->
+         
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="update">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                             </center>
                  
                 </tbody>
               </table>
@@ -84,7 +139,6 @@
     
   <!-- /.content-wrapper -->
 
-  <script src="/public/js/index.js"></script>
 
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -104,16 +158,14 @@
 });
 
  $(document).on("click", "#deleted", async function () {
-    var technologyId = $(this).attr("technology-id")
-    console.log(technologyId);
+    var technologyId = $(this).attr("technology-id")  
     var id = $(this).attr("data-id")
-    console.log(id);
+  
     let data = {
       id: id,
       technologyId
     }
-    console.log(data);
-    var request = {
+    let request = {
         "url": `http://localhost:8000/admin/technologydelete`,
         "method": "post",
         "data":data
@@ -121,7 +173,7 @@
 
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
-            alert("Data Deleted Successfully!");
+          
             location.reload();
     
         })
@@ -131,30 +183,32 @@
 })
 
 $(document).on("click", "#edit", async function () {
-    var technologyId = $(this).attr("technology-id")
-    console.log(technologyId);
-    var id = $(this).attr("data-id")
-    console.log(id);
-    let data = {
+  
+    let technologyId = $(this).attr("technology-id")
+    let id = $(this).attr("data-id")
+    $(document).on("click", "#update", async function (event) {
+event.preventDefault();
+let technologyName=document.getElementById('technologyName').value
+let count=document.getElementById('count').value
+let data = {
       id: id,
-      technologyId
+      technologyId,
+      technologyName,
+      count
     }
-    console.log(data);
-    var request = {
+    let request = {
         "url": `http://localhost:8000/admin/technologyupdate`,
         "method": "post",
         "data":data
     }
 
-    if (confirm("Do you really want to delete this record?")) {
-        $.ajax(request).done(function (response) {
-            alert("Data Deleted Successfully!");
-            location.reload();
-    
+    if (confirm("Do you really want to Update this record?")) {
+        $.ajax(request).done(function (response) {       
+            location.reload();    
         })
 
     }
-
+})
 })
 </script>
 </body>

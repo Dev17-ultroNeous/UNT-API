@@ -135,7 +135,9 @@ exports.listOfServiceTable = catchAsync(async (req, res, next) => {
     })
 })
 exports.contactUsTable = catchAsync(async (req, res, next) => {
-    const data = await ContactUs.find({}).sort([["createdAt", -1]]);
+
+
+    const data = await ContactUs.find({}).limit(10)
 
     res.render('contactustable', {
         data: data,
@@ -144,9 +146,10 @@ exports.contactUsTable = catchAsync(async (req, res, next) => {
 
 exports.technologyTable = catchAsync(async (req, res, next) => {
     const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
-
+    const value = await JobRequirements.find({}).sort([["createdAt", 1]]);
     res.render('technologytable', {
         data: data,
+        value: value
     })
 })
 
