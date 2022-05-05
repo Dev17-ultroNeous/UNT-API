@@ -110,7 +110,7 @@
 $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
     var request = {
-        "url": `http://localhost:8000/admin/portfoliodelete/${id}`,
+        "url": `https://ultroneous.com:8000/admin/portfoliodelete/${id}`,
         "method": "post"
     }
     if (confirm("Do you really want to delete this record?")) {
