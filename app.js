@@ -27,7 +27,6 @@ app.use((err, req, res, next) => {
     });
 });
 
-
 app.use('/admin', mainRoute);
 
 app.set('view engine', 'ejs');
