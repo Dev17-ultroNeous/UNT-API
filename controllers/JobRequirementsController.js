@@ -93,8 +93,6 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
 exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
     const id = req.body.id;
     let technologyId = req.body.technologyId
-
-
     let addData = await TechnologyOfJob.findOne({ departmentId: id });
 
     let array = addData.technology
@@ -171,7 +169,6 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
         budget: req.body.budget,
         message: req.body.message,
     });
-
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465, //465 is always ture//other port is false
@@ -179,8 +176,8 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
         service: "Gmail",
 
         auth: {
-            user: "dev17.ultroneous@gmail.com",
-            pass: "hkjwistmrsiqmjck",
+            user: "user.ultroneous@gmail.com",
+            pass: "ubpbmsthrpozoiai",
         },
     });
     transporter.verify((error, success) => {
@@ -189,46 +186,24 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
         }
     });
     // send mail with defined transport object
-    const mailForAdmin = {
-        from: "testnodemail@gmail.com",
-        to: "ajayhadiya19@gmail.com",
-        subject: "Inquire",
-        html:
-            "<h2 style='font-weight:bold;'>Inquire Of UNT</h2>" +
+    ejs.renderFile("email.ejs", { data: data }, function (err, data) {
+        const mailForAdmin = {
+            from: "testnodemail@gmail.com",
+            to: "user.ultroneous@gmail.com",
+            subject: "Inquire",
+            html: data
 
-            "<tr><td style='font-weight:bold;'>Name:</td>" +
-            "<td id='ids'>" +
-            req.body.name +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;'>Email:</td>" +
-            "<td id='ids'>" +
-            req.body.email +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;' >PhoneNumber:</td>" +
-            "<td id='ids'>" +
-            req.body.phone +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;'>CheckList:</td>" +
-            "<td id='ids'>" +
-            req.body.checklist +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;'>HireTeam:</td><td id='ids'>" +
-            req.body.hireteam +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;'>Budget:</td>" +
-            "<td id='ids'>" +
-            req.body.budget +
-            "</td></tr>" +
-            "<tr><td style='font-weight:bold;'>Message:</td>" +
-            "<td id='ids'>" +
-            req.body.message +
-            "</td></tr>"
+        };
+        transporter.sendMail(mailForAdmin, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+        });
+    });
 
-    };
-    let mailForUser;
 
     ejs.renderFile("test.ejs", { name: req.body.name }, function (err, data) {
-        mailForUser = {
+        const mailForUser = {
             from: "testnodemail@gmail.com",
             to: req.body.email,
             subject: "Inquire",
@@ -240,11 +215,7 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
                 return console.log(error);
             }
         });
-        transporter.sendMail(mailForAdmin, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-        });
+
     });
     res.status(200).json({
         status: "success",

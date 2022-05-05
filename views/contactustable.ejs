@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | jsGrid</title>
+  <title>Contactus Data</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -41,8 +41,7 @@
       </div><!-- /.container-fluid -->
     </section>
 
-    <!-- Main content -->
-  
+    <!-- Main content -->  
         <!-- /.card-header -->
         <div class="card-body">
           <div id="jsGrid1">
@@ -64,8 +63,7 @@
                  <% for(var i = 0; i < data.length; i++) { %>
                         <tr>
                           <td id="ids"><%= i + 1 %></td>
-                          <td><%= data[i].name %></td>
-                 
+                          <td><%= data[i].name %></td>                 
                           <td><%= data[i].email %></td>
                           <td><%= data[i].phone %></td>
                           <td><%= data[i].budget %></td>
@@ -76,10 +74,7 @@
                           <% for(let index = 0; index < data[i].checklist.length; index++) { %>
                           <li style="list-style: none;">  <%=data[i].checklist[index]  %></li>
                           <% } %> 
-                        </td>
-                      
-                         
-                          
+                        </td>                                                                   
                          <td>
                           <% for(let index = 0; index < data[i].hireteam.length; index++) { %>
                            <li style="list-style: none;"><%= data[i].hireteam[index] %></li> 
@@ -113,50 +108,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- Page specific script -->
 <script>
-//  $(document).ready(function () {
-//     var count = 1;
-//     $("button").click(async function () {
-//       let id = $(this).attr('id');
-//       $("#dataTable").empty();
-// console.log(id);
-//       if (id === 'next') {
-//         count++;
-//       }
-
-//       if (id === 'preview') {
-//         count--;
-//       }
-
-//       $("#dataTable").append('<thead><tr>  <th scope="col">#</th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Budget</th><th scope="col">Message</th><th scope="col">Checklist</th><th scope="col">Hireteam</th>')
-//       let page = count;
-
-//       const res = await axios.post(`http://localhost:8000/admin/getcontactusdata?limit=1&page=${page}`)
-//       let value = res.data.data
-
-//       for (let i = 0; i < value.length; i++) {
-//         let data1 = "<tr>";
-//         data1 += "<tr id='trid'><td >" + [(page * 10) + i + 1] + "</td><td id='ids'>" + value[i].name + "</td><td id='ids'>" + value[i].email + "</td><td id='ids'>" + value[i].checklist + "</td> </tr>";
-
-//         $("#dataTable").append(data1)
-//         $("#next").show();
-
-//       }
-//       $("#counter").html("Total_documents: " + res.data.total_documents);
-//       $("#counter").html("Page: " + page);
-//       let pageNumber
-//       $('#dataTable #number').each(function () {
-//         pageNumber = ($(this).text());
-//       });
-
-//       if (pageNumber == res.data.total_documents) {
-//         $(this).hide();
-
-//       }
-//     })
-//  })
-
-
-
+localStorage.setItem("authorized", "ultroneous");
 
 </script>
 </body>

@@ -16,7 +16,7 @@ const employeFeedbackSchema = new Schema({
     },
     description: {
         type: String,
-        trim: true
+
     }
 
 }, { timestamps: true })

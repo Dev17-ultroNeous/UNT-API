@@ -9,13 +9,12 @@ const ListOfServices = require("../models/listOfServicesModel");
 const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const TechnologiesOfContactUs = require("../models/technologiesOfContactUsModel");
 const Portfolio = require("../models/portfolioModel")
-
 const multer = require("multer");
 const sharp = require("sharp");
 
 const LookAtOurDesign = require("../models/lookAtOurDesignModel");
 const JobRequirements = require("../models/JobRequirementsModel");
-const { technologiesOfContactUs } = require("./JobRequirementsController");
+
 exports.getView = catchAsync(async (req, res, next) => {
 
     const data = await ContactUs.find({});
@@ -134,18 +133,10 @@ exports.listOfServiceTable = catchAsync(async (req, res, next) => {
     })
 })
 exports.contactUsTable = catchAsync(async (req, res, next) => {
-    var perPage = 10;
-    var page = req.params.page;
-
     const data = await ContactUs.find({})
-        .skip((perPage * page) - perPage)
-        .limit(perPage).exec()
-    let count = ContactUs.countDocuments({}).exec()
-
     res.render('contactustable', {
         data: data,
-        current: page,
-        pages: Math.ceil(count / perPage)
+
     })
 })
 

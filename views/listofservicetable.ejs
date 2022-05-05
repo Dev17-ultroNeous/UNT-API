@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | jsGrid</title>
+  <title>ListOFService</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -75,10 +75,8 @@
                       </td>
                  <td>
                    <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                  </td>
-                        
-                        </tr>
-    
+                  </td>                        
+                        </tr>   
                         <% } %> 
                  
                 </tbody>
@@ -114,12 +112,10 @@ $(document).on("click", "#deleted", async function () {
         "url": `http://localhost:8000/admin/listofservicesdelete/${id}`,
         "method": "post"
     }
-
     if (confirm("Do you really want to delete this record?")) {
         $.ajax(request).done(function (response) {
           
-            location.reload();
-    
+            location.reload(); 
         })
 
     }

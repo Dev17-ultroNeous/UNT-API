@@ -4,7 +4,6 @@ const Portfolio = require("../models/portfolioModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 
-
 const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
@@ -54,7 +53,7 @@ exports.getPortfolio = catchAsync(async (req, res, next) => {
     const webApp = await Portfolio.find({ type: "webapp" }).limit(8);
     const platform = await Portfolio.find({ type: "platform" }).limit(8);
     const other = await Portfolio.find({ type: "other" }).limit(8);
-
+    const allProject = await Portfolio.find({ type: "allProject" }).limit(8);
     mobileApp.map(async (el) => {
         el.image = process.env.API_URL + "/public/portfolio/" + el.image;
     });
@@ -67,7 +66,9 @@ exports.getPortfolio = catchAsync(async (req, res, next) => {
     other.map(async (el) => {
         el.image = process.env.API_URL + "/public/portfolio/" + el.image;
     });
-
+    allProject.map(async (el) => {
+        el.image = process.env.API_URL + "/public/portfolio/" + el.image;
+    });
     res.status(200).json({
         status: "success",
         data: {
@@ -75,6 +76,7 @@ exports.getPortfolio = catchAsync(async (req, res, next) => {
             webApp,
             platform,
             other,
+            allProject
         }
     });
 });
