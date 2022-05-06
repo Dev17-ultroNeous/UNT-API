@@ -35,12 +35,14 @@ router.post("/listofservicesdelete/:id", listOfServices.ListOfServicesDelete);
 router.post("/listofservicesupdate/:id", listOfServices.ListOfServicesUpdate);
 
 // router.post("/jobrequirements", JobRequirementsController.jobRequirements);
-router.post("/jobrequirementsdelete/:id", JobRequirementsController.jobRequirementsDelete);
+router.post("/jobrequirementsdelete", JobRequirementsController.jobRequirementsDelete);
 router.post("/jobrequirementsupdate", JobRequirementsController.jobRequirementsUpdate);
 
 router.post("/technologyadd", validateTechnology, JobRequirementsController.technologyOfJobRequirements)
 router.post("/technologydelete", JobRequirementsController.technologyOfJobRequirementsDelete)
 router.post("/technologyupdate", JobRequirementsController.technologyOfJobRequirementsUpdate)
+router.post("/maintechnologydelete", JobRequirementsController.mainTechnologyOfJobRequirementsDelete)
+
 
 router.post("/contactusdata", validateEmail,
     JobRequirementsController.contactUsData);

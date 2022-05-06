@@ -65,21 +65,21 @@
 
                           <td>
                             <span class="icon">
-                               <a href="technologyadd?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Technology Edit"><i class="fa fa-edit"></i></a>
+                              <a href="technologyadd?id=<%= data[i]._id%>"   class="btn btn-primary btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Technology Add"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                              <a href="jobrequirementupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="DepartmentName Update"><i class="fa fa-edit"></i></a>
                             </span>
                      
-                       <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                       <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="DepartmentName Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
                       </td>
 
-
-                        
+                                
                           <% } %> 
                         </tr>
                    
                  
                 </tbody>
               </table>
-         
+  
           </div>
         </div>
     
@@ -107,9 +107,15 @@
  $(document).on("click", "#deleted", async function () {
     var id = $(this).attr("data-id")
 
+    let data = {
+      id: id
+   
+    }
+  console.log(data);
     var request = {
-        "url": `https://ultroneous.com:8000/admin/jobrequirementsdelete/${id}`,
-        "method": "post"
+        "url": `http://localhost:8000/admin/jobrequirementsdelete`,
+        "method": "post",
+        "data": data
     }
 
     if (confirm("Do you really want to delete this record?")) {
@@ -122,6 +128,27 @@
     }
 
 })
+
+// $(document).on("click", "#edit", async function () {
+//     var id = $(this).attr("data-id")
+
+//     var request = {
+//         "url": `https://ultroneous.com:8000/admin/jobrequirementsupdate`,
+//         "method": "post"
+//     }
+
+//     if (confirm("Do you really want to delete this record?")) {
+//         $.ajax(request).done(function (response) {
+        
+//             location.reload();
+    
+//         })
+
+//     }
+
+// })
+
+
 
 
 </script>

@@ -25,32 +25,35 @@ exports.jobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.jobRequirementsDelete = catchAsync(async (req, res, next) => {
-
-
-    const data = await JobRequirements.findByIdAndDelete({ _id: req.params.id });
-
+    // .findByIdAndDelete({ departmentId: req.params.id });
+    const value = await TechnologyOfJob.findOneAndDelete({ departmentId: req.body.id })
+    const data = await JobRequirements.findOneAndDelete({ _id: req.body.id });
     res.status(200).json({
         status: "success",
         data,
+        value
     });
 });
 exports.jobRequirementsUpdate = catchAsync(async (req, res, next) => {
-    if (!req.body.id) {
-        return next(new catchAppError("Please enter id", 405));
-    }
-
-    const data = await JobRequirements.findOneAndUpdate(
+    const value = await JobRequirements.findOneAndUpdate(
         { _id: req.body.id },
         { name: req.body.name },
         { new: true }
     );
+    const data = await TechnologyOfJob.findOneAndUpdate(
+        { departmentId: req.body.id },
+        { departmentName: req.body.name },
+        { new: true }
+    );
+    if (data || value) {
+        res.redirect("./jobrequirementtable");
+    }
 
-    res.status(200).json({
-        status: "success",
-        data,
-    });
 });
-
+const findDepartname = async (id) => {
+    let x = await TechnologyOfJob.findOne({ departmentId: id })
+    console.log(x)
+}
 exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
     let technologyName = req.body.technologyName;
     let count = req.body.count;
@@ -70,7 +73,7 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             { new: true }
         );
         if (data) {
-            res.redirect("./technologytable");
+            res.redirect("./jobtechnologytable");
         }
     } else if (value) {
         const data = await TechnologyOfJob.create({
@@ -83,7 +86,7 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             },
         });
         if (data) {
-            res.redirect("./technologytable");
+            res.redirect("./jobtechnologytable");
         }
     } else {
         return alert("Please enter valid id.")
@@ -92,6 +95,14 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
 
 exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
     const id = req.body.id;
+    const mainiId = req.body.mainiId;
+    if (mainiId) {
+        const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId })
+        res.status(200).json({
+            status: "success",
+            data,
+        });
+    }
     let technologyId = req.body.technologyId
     let addData = await TechnologyOfJob.findOne({ departmentId: id });
 
@@ -115,6 +126,17 @@ exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) =>
     });
 });
 
+exports.mainTechnologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
+
+    const mainiId = req.body.mainiId;
+
+    const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId })
+    res.status(200).json({
+        status: "success",
+        data,
+    });
+
+});
 
 exports.technologyOfJobRequirementsUpdate = catchAsync(async (req, res, next) => {
     const id = req.body.id;
@@ -260,7 +282,7 @@ exports.technologiesOfContactUsUpdate = catchAsync(async (req, res, next) => {
 
     const data = await TechnologiesOfContactUs.findByIdAndUpdate({ _id: req.body.id },
         {
-            name: req.body.name,
+            name: req.params.name,
             type: req.body.type
         },
         { new: true });

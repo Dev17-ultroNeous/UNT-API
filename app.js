@@ -46,8 +46,7 @@ app.set('view engine', 'ejs');
 app.use('/admin', viewRoute)
 app.use(ErrorController);
 
-
-// const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8000;
 // const httpServer = http.createServer(app);
 // const httpsServer = https.createServer(credentials, app);
 
@@ -55,5 +54,5 @@ app.use(ErrorController);
 //     console.log('HTTPS Server running on port 8000');
 // });
 
-// app.listen(port)
-// app.listen(console.log('server listening at port ' + port));
+app.listen(port)
+app.listen(console.log('server listening at port ' + port));

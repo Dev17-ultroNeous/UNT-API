@@ -58,11 +58,16 @@
                   </tr>
                 </thead>
                 <tbody>
-               
+              
                   <% for(var i = 0; i < data.length; i++) { %>
                  <tr> 
                        <td style="background-color: #dee2e6;"><b style="font-size: 24px;">  <%= data[i].departmentName %></b></td>
-                    
+                    <td>
+                      <span class="icon">
+                        <a  class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Technology Edit"><i class="fa fa-edit"></i></a>
+                     </span>
+                       <a  class="btn btn-danger btn-sm rounded-0"  id="deletedMain" data-toggle="tooltip" data-placement="top" title="Delete" main-id=<%=  data[i]._id %>> <i class="fa fa-trash"></i></a>
+                      </td>
                  </tr>
                     <% for(var index = 0; index < data[i].technology.length; index++) { %>
                 <tr>         
@@ -74,14 +79,14 @@
               <a  class="btn btn-danger btn-sm rounded-0"  id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>> <i class="fa fa-trash"></i></a></li> 
            </span>
               </td>
-
-                        <% } %> 
-                        <% } %> 
-                   
+              <% } %>   
                </tr>
-                <center>
+       
+
+          
+              
           <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -118,7 +123,7 @@
                 </div>
                 <!-- /.card-body -->
          
-              </form>
+              <!-- </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -128,9 +133,9 @@
     </div>
   </div>
                              </center>
-                 
+                  -->
                 </tbody>
-              </table>
+              </table> -->
          
           </div>
         </div>
@@ -155,59 +160,82 @@
     $('[data-toggle="tooltip"]').tooltip();
 });
 
- $(document).on("click", "#deleted", async function () {
-    var technologyId = $(this).attr("technology-id")  
-    var id = $(this).attr("data-id")
+//  $(document).on("click", "#deleted", async function () {
+//     var technologyId = $(this).attr("technology-id")  
+//     var id = $(this).attr("data-id")
   
-    let data = {
-      id: id,
-      technologyId
-    }
-    let request = {
-        "url": `https://ultroneous.com:8000/admin/technologydelete`,
-        "method": "post",
-        "data":data
-    }
+//     let data = {
+//       id: id,
+//       technologyId
+//     }
+//     let request = {
+//         "url": `http://localhost:8000/admin/technologydelete`,
+//         "method": "post",
+//         "data":data
+//     }
 
-    if (confirm("Do you really want to delete this record?")) {
-        $.ajax(request).done(function (response) {
+//     if (confirm("Do you really want to delete this record?")) {
+//         $.ajax(request).done(function (response) {
           
-            location.reload();
+//             location.reload();
     
-        })
+//         })
 
-    }
+//     }
 
-})
-
-$(document).on("click", "#edit", async function () {
+// })
+// $(document).on("click", "#deletedMain", async function () {
   
-    let technologyId = $(this).attr("technology-id")
-    let id = $(this).attr("data-id")
-    $(document).on("click", "#update", async function (event) {
-event.preventDefault();
-let technologyName=document.getElementById('technologyName').value
-let count=document.getElementById('count').value
-let data = {
-      id: id,
-      technologyId,
-      technologyName,
-      count
-    }
-    let request = {
-        "url": `https://ultroneous.com:8000/admin/technologyupdate`,
-        "method": "post",
-        "data":data
-    }
+//     var mainId = $(this).attr("main-id")
+  
+//     let data = {
+//       mainId
+//     }
+    
+//     let request = {
+//         "url": `http://localhost:8000/admin/technologydelete`,
+//         "method": "post",
+//         "data":data
+//     }
 
-    if (confirm("Do you really want to Update this record?")) {
-        $.ajax(request).done(function (response) {       
-            location.reload();    
-        })
+//     if (confirm("Do you really want to delete this record?")) {
+//         $.ajax(request).done(function (response) {          
+//             location.reload();
+    
+//         })
 
-    }
-})
-})
+//     }
+
+// })
+
+// $(document).on("click", "#edit", async function () {
+  
+//     let technologyId = $(this).attr("technology-id")
+//     let id = $(this).attr("data-id")
+//     $(document).on("click", "#update", async function (event) {
+// event.preventDefault();
+// let technologyName=document.getElementById('technologyName').value
+// let count=document.getElementById('count').value
+// let data = {
+//       id: id,
+//       technologyId,
+//       technologyName,
+//       count
+//     }
+//     let request = {
+//         "url": `http://localhost:8000/admin/technologyupdate`,
+//         "method": "post",
+//         "data":data
+//     }
+
+//     if (confirm("Do you really want to Update this record?")) {
+//         $.ajax(request).done(function (response) {       
+//             location.reload();    
+//         })
+
+//     }
+// })
+// })
 </script>
 </body>
 </html>

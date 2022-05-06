@@ -89,7 +89,7 @@
                   <!-- /.col -->
                 </div>
                 <div class="col-4">
-                  <button class="btn btn-primary btn-block" >
+                  <button class="btn btn-primary btn-block" onclick="login()">
                     Sign In
                   </button>
                 </div>
@@ -112,7 +112,7 @@
         <!-- AdminLTE App -->
         <script src="../../dist/js/adminlte.min.js"></script>
         <script type="text/javascript">
-
+        const login = () => localStorage.setItem("authorized","ultroneous")
         </script>
       </body>
     </html>

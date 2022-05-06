@@ -48,7 +48,7 @@
   <body class="hold-transition sidebar-mini layout-fixed" >
     <div class="wrapper" style="background: black;">
       <!-- Preloader -->
-      <div
+     <div
         class="preloader flex-column justify-content-center align-items-center" style="color: black;"
       >
         <img
@@ -125,59 +125,59 @@ height: auto;"
                 <ul class="nav nav-treeview" id="menu">
                   <li class="nav-item">
                     <a href="clienttable"  class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                    
                       <p>ClientFeedback Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="employetable" class="nav-link"  >
-                      <i class="far fa-circle nav-icon"></i>
+         
                       <p>EmployeFeedback Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="listofservicetable" class="nav-link" >
-                      <i class="far fa-circle nav-icon"></i>
+               
                       <p>ListOfService Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="contactustable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                   
                       <p>ContactUs Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="lookourdesigntable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                 
                       <p>LookOurDesign Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="jobrequirementtable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                 
                       <p>JobRequirement Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="technologytable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>RequirementTechnology</p>
+                    <a href="jobtechnologytable" class="nav-link">
+              
+                      <p>Job Technology</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="technologyofcontactustable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                   
                       <p>Technology Data</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="portfoliotable" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                   
                       <p>Portfolio Data</p>
                     </a>
                   </li>
-                  <li class="nav-item"style="    margin-top: 26rem;
+                  <li class="nav-item"style="margin-top: 19rem;
                   margin-left: 1rem;">
                     <a href="login" class="" id="logout">
                       <i class="fas fa-sign-out-alt"></i>
@@ -224,10 +224,20 @@ height: auto;"
 <script src="/dist/js/adminlte.js"></script>
 
 <script type="text/javascript">
+  const check = localStorage.getItem('authorized')
+  if(check !== "ultroneous"){
+      window.location = "login"
+  }
+jQuery(function($) {
+     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+     $('li a').each(function() {
+      if (this.href === path) {
+       $(this).addClass('active');
+      }
+     });
+    });
 
- $('li a').click(function(){
-    $(this).addClass("nav-link active");
-});
+
 var x = document.getElementById("logout")
 x.addEventListener("click",()=>{
   localStorage.removeItem("authorized")

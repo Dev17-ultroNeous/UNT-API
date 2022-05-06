@@ -24,7 +24,6 @@ router.post('/portfolioupdate', portfolioController.uploadPortfolioPhotos, portf
 router.get('/contactustable', viewController.contactUsTable)
 router.get('/contactustable/:page', viewController.contactUsTable, viewController.contactUsTablePage)
 
-router.get('/jobrequirementtable', viewController.JobRequirementTable)
 router.post("/employeadd", viewController.uploadUserPhotos, viewController.employeAdd)
 router.post("/employeupdate", viewController.uploadUserPhotos, viewController.employeUpdate)
 router.get('/employetable', viewController.employeTable)
@@ -50,9 +49,14 @@ router.get('/listofservice', viewController.listOfService)
 router.get('/listofserviceupdate', viewController.listOfServiceForUpdate)
 router.get('/listofservicetable', viewController.listOfServiceTable)
 
-router.get('/technologytable', viewController.technologyTable)
+
+router.get('/jobrequirementtable', viewController.JobRequirementTable)
 router.get('/jobrequirementadd', viewController.JobRequirementAdd)
 router.get('/technologyadd', viewController.technologyAdd)
+router.get('/jobrequirementupdate', viewController.JobRequirementUpdate)
+router.post('/jobrequirementupdate', JobRequirementsController.jobRequirementsUpdate)
+router.get('/jobtechnologytable', viewController.jobTechnologyTable)
+
 
 router.post('/technologyofcontactusadd', JobRequirementsController.technologiesOfContactUs)
 router.get('/technologyofcontactusupdate', viewController.technologyOfContactUsUpdate)

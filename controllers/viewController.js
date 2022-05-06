@@ -38,6 +38,7 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
         );
 
         if (validPassword) {
+
             res.redirect("./contactustable");
         } else {
             alert("Invaild Details")
@@ -158,14 +159,7 @@ exports.contactUsTablePage = catchAsync(async (req, res, next) => {
 
 
 
-exports.technologyTable = catchAsync(async (req, res, next) => {
-    const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
-    const value = await JobRequirements.find({}).sort([["createdAt", 1]]);
-    res.render('technologytable', {
-        data: data,
-        value: value
-    })
-})
+
 
 exports.technologyOfContactUsTable = catchAsync(async (req, res, next) => {
     const data = await TechnologiesOfContactUs.find({}).sort([["createdAt", -1]]);
@@ -203,6 +197,14 @@ exports.JobRequirementAdd = catchAsync(async (req, res, next) => {
     res.render('jobrequirementadd')
 })
 
+exports.JobRequirementUpdate = catchAsync(async (req, res, next) => {
+    let data = await JobRequirements.findById({ _id: req.query.id });
+    res.render('jobrequirementupdate', {
+        data: data
+    })
+})
+
+
 exports.technologyOfContactUsAdd = catchAsync(async (req, res, next) => {
     res.render('technologyofcontctusadd')
 })
@@ -219,7 +221,24 @@ exports.portfolioTable = catchAsync(async (req, res, next) => {
         data: data
     })
 })
+exports.technologyTable = catchAsync(async (req, res, next) => {
+    const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
+    // const value = await JobRequirements.find({}).sort([["createdAt", 1]]);
+    res.render('technologytable', {
+        data: data
 
+    })
+})
+
+exports.jobTechnologyTable = catchAsync(async (req, res, next) => {
+    const data = await TechnologyOfJob.find({})
+    const value = await JobRequirements.find({})
+    res.render('jobtechnologytable', {
+        data: data,
+        value: value
+    })
+
+})
 
 exports.technologyAdd = catchAsync(async (req, res, next) => {
     let data = await JobRequirements.findById({ _id: req.query.id });

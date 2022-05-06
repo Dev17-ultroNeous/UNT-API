@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Technology</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
+    <!-- jsGrid -->
+    <link rel="stylesheet" href="/plugins/jsgrid/jsgrid.min.css" />
+    <link rel="stylesheet" href="/plugins/jsgrid/jsgrid-theme.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.min.css" />
+  </head>
+  <body>
+    <%- include('sidebar'); -%>
+    <!-- /.navbar --
+    <!-- Content Wrapper. Contains page content -->
+  
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+     
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+        
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
+                padding-right: 10px;
+                padding-left: 10px;"><a href="jobrequirementtable" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
+         
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div id="jsGrid1">
+          <table  class="table">
+              <thead>
+                <tr>
+
+        
+                </tr>
+              </thead>
+              <tbody>
+                <% for(var i = 0; i < data.length; i++) { %>
+             
+                    <tr style="background-color: #dee2e6;"> 
+                          <td ><b style="font-size: 24px;">  <%= data[i].departmentName %></b>                                                                             
+                        </td>
+                  </tr>
+                  <% for(var index = 0; index < data[i].technology.length; index++) { %>
+                    <tr>         
+                      <td><%=  data[i].technology[index].technologyName %>
+                      (<%=  data[i].technology[index].count %>)  </td>                     
+                      <td>
+                        <span class="icon">
+                            <a class="btn btn-success btn-sm rounded-0"  data-toggle="modal" data-target="#exampleModal" id="edit" 
+                    
+                            data-toggle="tooltip" data-placement="top" title="Edit" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %> technology-name="<%=  data[i].technology[index].technologyName %>"
+                              count="<%=  data[i].technology[index].count %>" ><i class="fa fa-edit"></i></a>                         
+                  <a  class="btn btn-danger btn-sm rounded-0"  id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" technology-id=<%=  data[i].technology[index]._id %> data-id=<%= data[i].departmentId %>> <i class="fa fa-trash"></i></a></li> 
+               </span>
+                  </td>
+                  <% } %> 
+                  
+                  <% } %> 
+              
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form action="/admin/jobrequirementadd" method="post">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1" style="margin-right: 24rem;">TechnologyName</label>
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="technologyName"
+                      placeholder="Enter TechnologyName"
+
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1"  style="margin-right: 24rem;">Count</label>
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="count"
+                  
+                      placeholder="Enter Count"
+                      required
+                    />
+                  </div>
+                </div>
+                <!-- /.card-body -->
+         
+           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="update">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                             </center>           
+
+ <script src="../../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jsGrid -->
+<script src="../../plugins/jsgrid/demos/db.js"></script>
+<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
+<!-- Page specific script -->
+<script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+ $(document).on("click", "#deleted", async function () {
+    var technologyId = $(this).attr("technology-id")  
+    var id = $(this).attr("data-id")
+  
+    let data = {
+      id: id,
+      technologyId
+    }
+    let request = {
+        "url": `http://localhost:8000/admin/technologydelete`,
+        "method": "post",
+        "data":data
+    }
+
+    if (confirm("Do you really want to delete this record?")) {
+        $.ajax(request).done(function (response) {
+          
+            location.reload();
+    
+        })
+
+    }
+
+})
+
+// $(document).on("click", "#exampleModal", async function () {
+//     var id = $(this).attr("mainData-id");
+// console.log(id);
+//     $(document).on("click", "#addData", async function () {  
+   
+    
+//     let technologyName=  $('#technologyName').val()
+//     let count=  $('#count').val()
+
+  
+//     let data = {
+//       id: id,
+//       technologyName,
+//       count
+//     }
+//     console.log(data);
+
+//     let request = {
+//         "url": `http://localhost:8000/admin/technologyadd`,
+//         "method": "post",
+//         "data":data
+//     }
+
+// })
+// })
+
+
+$(document).on("click", "#edit", async function () {
+  
+    let technologyId = $(this).attr("technology-id")
+    let id = $(this).attr("data-id")
+    let technology = $(this).attr("technology-name")
+    let count = $(this).attr("count")
+
+    document.getElementById('technologyName').value=`${technology}`
+    document.getElementById('count').value = `${count}`
+    $(document).on("click", "#update", async function (event) {
+event.preventDefault();
+let technologyName=document.getElementById('technologyName').value
+let count=document.getElementById('count').value
+let data = {
+      id: id,
+      technologyId,
+      technologyName,
+      count
+    }
+    let request = {
+        "url": `http://localhost:8000/admin/technologyupdate`,
+        "method": "post",
+        "data":data
+    }
+
+    if (confirm("Do you really want to Update this record?")) {
+        $.ajax(request).done(function (response) {       
+            location.reload();    
+        })
+
+    }
+})
+})
+
+</script>                 
+  </body>
+</html>
