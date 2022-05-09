@@ -46,14 +46,11 @@ exports.jobRequirementsUpdate = catchAsync(async (req, res, next) => {
         { new: true }
     );
     if (data || value) {
-        res.redirect("./jobrequirementtable");
+        res.redirect("./jobtechnologytable");
     }
 
 });
-const findDepartname = async (id) => {
-    let x = await TechnologyOfJob.findOne({ departmentId: id })
-    console.log(x)
-}
+
 exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
     let technologyName = req.body.technologyName;
     let count = req.body.count;

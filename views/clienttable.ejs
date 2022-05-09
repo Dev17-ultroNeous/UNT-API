@@ -58,6 +58,7 @@
                     <th scope="col" class="font">Description</th>
                   <th scope="col" class="font">Image</th>
                   <th scope="col"></th>
+                  <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -69,13 +70,14 @@
                           <td><%= data[i].designation %></td>
                           <td><%= data[i].description %></td>
                        <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
-                       <td>      
                     
-                          <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                       </td>
                        <td>
                             <a href="clientfeedback?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>                                                          
-                         </td>                        
+                         </td>                   
+                         <td>      
+                    
+                          <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                       </td>     
                         </tr>
     
                         <% } %> 

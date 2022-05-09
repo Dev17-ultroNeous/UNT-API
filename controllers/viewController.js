@@ -38,14 +38,12 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
         );
 
         if (validPassword) {
-
-            res.redirect("./contactustable");
+            res.redirect("./clienttable");
         } else {
-            alert("Invaild Details")
+            alert("Invalid Details");
+
         }
     }
-
-
 })
 
 const storage = multer.diskStorage({
@@ -233,6 +231,7 @@ exports.technologyTable = catchAsync(async (req, res, next) => {
 exports.jobTechnologyTable = catchAsync(async (req, res, next) => {
     const data = await TechnologyOfJob.find({})
     const value = await JobRequirements.find({})
+
     res.render('jobtechnologytable', {
         data: data,
         value: value
