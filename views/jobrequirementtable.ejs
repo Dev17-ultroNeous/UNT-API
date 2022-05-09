@@ -70,9 +70,7 @@
                             </span>
                      
                        <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="DepartmentName Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                      </td>
-
-                                
+                      </td>                               
                           <% } %> 
                         </tr>
                    
@@ -111,9 +109,8 @@
       id: id
    
     }
-  console.log(data);
     var request = {
-        "url": `http://localhost:8000/admin/jobrequirementsdelete`,
+        "url": `https://ultroneous.com:8000/admin/jobrequirementsdelete`,
         "method": "post",
         "data": data
     }
