@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const FeedbackController = require("../controllers/FeedbackController");
-const JobRequirementsController = require("../controllers/JobRequirementsController");
+const FeedbackController = require("../controllers/feedbackController");
+const JobRequirementsController = require("../controllers/jobRequirementsController");
 const userController = require("../controllers/userController");
 const listOfServices = require("../controllers/listOfServiceController")
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
@@ -68,10 +68,6 @@ router.post("/signin", validateEmail, validatePassword,
 router.post("/blogdelete/:id", blogController.blogDelete);
 router.post("/blogupdate/:id", portfolioController.portfolioUpdate);
 
-
-
-
-
 router.get("/getportfolio", portfolioController.getPortfolio);
 
 router.get("/getclientfeedback", FeedbackController.getClientFeedbacks);
@@ -82,6 +78,5 @@ router.get("/gettechnologiesofcontactus", JobRequirementsController.getTechnolog
 router.post("/getcontactusdata", JobRequirementsController.getContactUsData);
 router.get("/getlookatourdesign", LookAtOurDesign.getLookAtOurDesign);
 router.get("/getblog", blogController.getBlog);
-
 
 module.exports = router;

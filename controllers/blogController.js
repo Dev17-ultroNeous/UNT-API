@@ -36,7 +36,7 @@ exports.resizeBlogPhoto = catchAsync(async (req, res, next) => {
 exports.blogAdd = catchAsync(async (req, res, next) => {
 
     const data = await Blog.create({
-        name: req.body.name,
+
         title: req.body.title,
         description: req.body.description,
         image: req.body.image,
