@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LookatourDesign-Update</title>
+    <title>Blog-add</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -26,14 +26,14 @@
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <%- include('sidebar'); -%>
+      <%- include('blog-sidebar'); -%>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-             
+              <div class="col-sm-6"></div>
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -55,58 +55,63 @@
                   <!-- /.card-header -->
                   <!-- form start -->
                   <form
-                    action="/admin/lookourdesignupdate"
+                    action="/admin/blogadd"
                     method="post"
                     enctype="multipart/form-data"
                   >
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Name</label>
+                        <label for="exampleInputEmail1">Name</label>
                         <input
                           type="text"
                           name="name"
                           class="form-control"
-                          id="exampleInputPassword1"
-                          value="<%= data.name %>"
-                        />
-                      </div>
-                      <div class="form-group">
-                        <input
-                          type="hidden"
-                          name="id"
-                          value="<%= data._id %>"
-                        />
-
-                        <img
-                          src="<%=data.image %>"
-                          style="height: 50px"
-                          name="image"
-                        />
-                        <input
-                          type="file"
-                          name="image"
-                          class="form-control"
-                          value="<%= data.image %>"
+                          id="exampleInputEmail1"
+                          placeholder="Enter Name"
                           required
                         />
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">isImageShow</label
-                        >
-                        <div >
+                        <label for="exampleInputPassword1">Title</label>
                         <input
-                          type="radio"
-                          name="isImageShow"
-                          value="true"
-                       
-                        />  True
-                    
-                        <br>
+                          type="text"
+                          name="title"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter Title"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Description</label>
                         <input
-                          type="radio"
-                          name="isImageShow"
-                          value="false"
-                        /> False
+                          type="text"
+                          name="description"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter Description"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Link</label>
+                        <input
+                          type="text"
+                          name="link"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter Link"
+                          required
+                        />
+                      </div>
+                      <div class="form-group" enctype="multipart/form-data">
+                        <label for="exampleInputPassword1">Image</label>
+                        <input
+                          type="file"
+                          name="image"
+                          class="form-control"
+                          required
+                        />
                       </div>
                     </div>
                     <!-- /.card-body -->
@@ -132,11 +137,10 @@
       </div>
       <!-- /.content-wrapper -->
       <footer class="main-footer">
-   
         <strong
-        >Copyright &copy;
-        <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong
-      >
+          >Copyright &copy;
+          <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong
+        >
         All rights reserved.
       </footer>
 
@@ -158,9 +162,8 @@
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <!-- Page specific script -->
 
+    <!-- Page specific script -->
     <script></script>
   </body>
 </html>

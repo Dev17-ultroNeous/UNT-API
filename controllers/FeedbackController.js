@@ -2,7 +2,6 @@ const multer = require("multer");
 const sharp = require("sharp");
 const ClientFeedback = require("../models/clientFeedbackModel");
 const EmployeFeedback = require("../models/employeFeedbackModel");
-const { trim } = require("express-validator");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
 

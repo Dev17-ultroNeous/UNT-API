@@ -7,6 +7,7 @@ const listOfServices = require("../controllers/listOfServiceController")
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
 const authController = require("../controllers/authController")
 const portfolioController = require("../controllers/portfolioController")
+const blogController = require("../controllers/blogController")
 const {
     validatePassword,
     validateEmail,
@@ -63,6 +64,14 @@ router.post("/signup", validatePassword, userController.signUp);
 router.post("/signin", validateEmail, validatePassword,
     userController.signIn);
 
+
+router.post("/blogdelete/:id", blogController.blogDelete);
+router.post("/blogupdate/:id", portfolioController.portfolioUpdate);
+
+
+
+
+
 router.get("/getportfolio", portfolioController.getPortfolio);
 
 router.get("/getclientfeedback", FeedbackController.getClientFeedbacks);
@@ -72,6 +81,7 @@ router.get("/getjobrequirements", JobRequirementsController.getJobRequirements);
 router.get("/gettechnologiesofcontactus", JobRequirementsController.getTechnologiesOfContactUs);
 router.post("/getcontactusdata", JobRequirementsController.getContactUsData);
 router.get("/getlookatourdesign", LookAtOurDesign.getLookAtOurDesign);
+router.get("/getblog", blogController.getBlog);
 
 
 module.exports = router;

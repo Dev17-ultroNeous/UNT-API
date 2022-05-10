@@ -9,6 +9,8 @@ const ListOfServices = require("../models/listOfServicesModel");
 const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const TechnologiesOfContactUs = require("../models/technologiesOfContactUsModel");
 const Portfolio = require("../models/portfolioModel")
+const Blog = require("../models/blogModel")
+
 const multer = require("multer");
 const sharp = require("sharp");
 
@@ -28,6 +30,13 @@ exports.loginPage = catchAsync(async (req, res, next) => {
     res.render('login')
 })
 
+exports.blogLoginPage = catchAsync(async (req, res, next) => {
+    res.render('blog-login')
+})
+
+
+
+
 exports.postloginPage = catchAsync(async (req, res, next) => {
 
     const data = await User.findOne({ email: req.body.email });
@@ -37,7 +46,7 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
             data.password
         );
 
-        if (validPassword) {
+        if (validPassword && data.role === 'admin') {
             res.redirect("./clienttable");
         } else {
             alert("Invalid Details");
@@ -45,6 +54,25 @@ exports.postloginPage = catchAsync(async (req, res, next) => {
         }
     }
 })
+
+exports.postBolgLoginPage = catchAsync(async (req, res, next) => {
+
+    const data = await User.findOne({ email: req.body.email });
+    if (data) {
+        const validPassword = await bcrypt.compare(
+            req.body.password,
+            data.password
+        );
+
+        if (validPassword) {
+            res.redirect("./blogtable");
+        } else {
+            alert("Invalid Details");
+
+        }
+    }
+})
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -210,6 +238,27 @@ exports.portfolioAdd = catchAsync(async (req, res, next) => {
     res.render('portfolioadd')
 })
 
+exports.blogAdd = catchAsync(async (req, res, next) => {
+    res.render('blogadd')
+})
+
+exports.blogUpdate = catchAsync(async (req, res, next) => {
+    let data = await Blog.findById({ _id: req.query.id });
+    data.image = process.env.API_URL + "/public/blog/" + data.image;
+    res.render('blogupdate', {
+        data: data
+    })
+})
+
+exports.blogTable = catchAsync(async (req, res, next) => {
+    let data = await Blog.find({});
+    data.map(async (el) => {
+        el.image = process.env.API_URL + "/public/blog/" + el.image;
+    });
+    res.render('blogtable', {
+        data: data
+    })
+})
 exports.portfolioTable = catchAsync(async (req, res, next) => {
     let data = await Portfolio.find({});
     data.map(async (el) => {

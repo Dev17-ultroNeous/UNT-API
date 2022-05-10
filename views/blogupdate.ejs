@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LookatourDesign-Update</title>
+    <title>Blog-Update</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -26,14 +26,14 @@
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <%- include('sidebar'); -%>
+      <%- include('blog-sidebar'); -%>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-             
+              <div class="col-sm-6"></div>
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -55,28 +55,65 @@
                   <!-- /.card-header -->
                   <!-- form start -->
                   <form
-                    action="/admin/lookourdesignupdate"
+                    action="/admin/blogupdate"
                     method="post"
                     enctype="multipart/form-data"
                   >
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Name</label>
-                        <input
-                          type="text"
-                          name="name"
-                          class="form-control"
-                          id="exampleInputPassword1"
-                          value="<%= data.name %>"
-                        />
-                      </div>
-                      <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
                         <input
                           type="hidden"
                           name="id"
                           value="<%= data._id %>"
                         />
+                        <input
+                          type="text"
+                          name="name"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          placeholder="Enter name"
+                          value="<%= data.name %>"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Title</label>
+                        <input
+                          type="text"
+                          name="title"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter Title"
+                          value="<%= data.title %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Description</label>
+                        <input
+                          type="text"
+                          name="description"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter Description"
+                          value="<%= data.description %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Link</label>
 
+                        <input
+                          type="text"
+                          name="link"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          placeholder="Enter Link"
+                          value="<%= data.link %>"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Image</label>
                         <img
                           src="<%=data.image %>"
                           style="height: 50px"
@@ -86,27 +123,10 @@
                           type="file"
                           name="image"
                           class="form-control"
+                          id="exampleInputPassword1"
                           value="<%= data.image %>"
                           required
                         />
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">isImageShow</label
-                        >
-                        <div >
-                        <input
-                          type="radio"
-                          name="isImageShow"
-                          value="true"
-                       
-                        />  True
-                    
-                        <br>
-                        <input
-                          type="radio"
-                          name="isImageShow"
-                          value="false"
-                        /> False
                       </div>
                     </div>
                     <!-- /.card-body -->
@@ -132,11 +152,10 @@
       </div>
       <!-- /.content-wrapper -->
       <footer class="main-footer">
-   
         <strong
-        >Copyright &copy;
-        <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong
-      >
+          >Copyright &copy;
+          <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong
+        >
         All rights reserved.
       </footer>
 
@@ -161,6 +180,17 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Page specific script -->
 
-    <script></script>
+    <script>
+      $("#quickForm").submit(async function (event) {
+        event.preventDefault();
+
+        var unindexed_array = $(this).serializeArray();
+        var data = {};
+
+        $.map(unindexed_array, function (n, i) {
+          data[n["name"]] = n["value"];
+        });
+      });
+    </script>
   </body>
 </html>

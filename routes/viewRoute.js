@@ -5,9 +5,14 @@ const listOfServicesController = require("../controllers/listOfServiceController
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
 const JobRequirementsController = require("../controllers/JobRequirementsController");
 const portfolioController = require("../controllers/portfolioController")
+const blogController = require("../controllers/blogController")
+
 
 router.get("/login", viewController.loginPage, viewController.postloginPage)
 router.post("/table", viewController.postloginPage)
+
+router.get("/blog-login", viewController.blogLoginPage)
+router.post("/blog-login", viewController.postBolgLoginPage)
 
 router.post('/jobrequirementadd', JobRequirementsController.jobRequirements)
 router.post('/technologyadd', JobRequirementsController.technologyOfJobRequirements)
@@ -63,6 +68,13 @@ router.get('/technologyofcontactusupdate', viewController.technologyOfContactUsU
 router.get('/technologyofcontctusadd', viewController.technologyOfContactUsAdd)
 router.get('/technologyofcontactustable', viewController.technologyOfContactUsTable)
 router.post('/technologyofcontactusupdate', JobRequirementsController.technologiesOfContactUsUpdate)
+
+router.get('/blogtable', viewController.blogTable)
+router.get('/blogadd', viewController.blogAdd)
+router.post('/blogadd', blogController.uploadBlogPhotos, blogController.resizeBlogPhoto, blogController.blogAdd)
+router.get('/blogupdate', viewController.blogUpdate)
+router.post('/blogupdate', blogController.uploadBlogPhotos, blogController.resizeBlogPhoto, blogController.blogUpdate)
+
 
 
 module.exports = router;
