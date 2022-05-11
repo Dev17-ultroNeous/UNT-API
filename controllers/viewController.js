@@ -10,12 +10,10 @@ const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const TechnologiesOfContactUs = require("../models/technologiesOfContactUsModel");
 const Portfolio = require("../models/portfolioModel")
 const Blog = require("../models/blogModel")
-
+const LookAtOurDesign = require("../models/lookAtOurDesignModel");
+const JobRequirements = require("../models/jobRequirementsModel");
 const multer = require("multer");
 const sharp = require("sharp");
-
-const LookAtOurDesign = require("../models/lookAtOurDesignModel");
-const JobRequirements = require("../models/JobRequirementsModel");
 
 exports.getView = catchAsync(async (req, res, next) => {
 

@@ -24,7 +24,7 @@ exports.uploadBlogPhotos = upload.single("image");
 
 exports.resizeBlogPhoto = catchAsync(async (req, res, next) => {
 
-    req.body.image = `${req.body.name}-${Date.now()}.jpeg`;
+    req.body.image = `Blog-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
         .toFormat("jpeg")
@@ -75,7 +75,8 @@ exports.blogUpdate = catchAsync(async (req, res, next) => {
     const data = await Blog.findByIdAndUpdate(
         { _id: id },
         {
-            name: req.body.name,
+            title: req.body.title,
+            description: req.body.description,
             link: req.body.link,
             image: req.body.image,
 

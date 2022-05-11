@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const JobRequirements = require("./JobRequirementsModel");
+
 const Schema = mongoose.Schema;
 
 const technologyOfJobSchema = new Schema(

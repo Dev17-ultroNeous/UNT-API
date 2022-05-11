@@ -3,7 +3,7 @@ const router = express.Router();
 const viewController = require("../controllers/viewController")
 const listOfServicesController = require("../controllers/listOfServiceController")
 const LookAtOurDesign = require("../controllers/lookAtOurDesignController")
-const JobRequirementsController = require("../controllers/JobRequirementsController");
+const JobRequirementsController = require("../controllers/jobRequirementsController");
 const portfolioController = require("../controllers/portfolioController")
 const blogController = require("../controllers/blogController")
 
@@ -74,7 +74,5 @@ router.get('/blogadd', viewController.blogAdd)
 router.post('/blogadd', blogController.uploadBlogPhotos, blogController.resizeBlogPhoto, blogController.blogAdd)
 router.get('/blogupdate', viewController.blogUpdate)
 router.post('/blogupdate', blogController.uploadBlogPhotos, blogController.resizeBlogPhoto, blogController.blogUpdate)
-
-
 
 module.exports = router;
