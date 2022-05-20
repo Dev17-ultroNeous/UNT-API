@@ -25,8 +25,11 @@ exports.uploadBlogPhotos = upload.single("image");
 exports.resizeBlogPhoto = catchAsync(async (req, res, next) => {
 
     req.body.image = `Blog-${Date.now()}.jpeg`;
-
     await sharp(req.file.buffer)
+        .resize({
+            width: 416,
+            height: 381
+        })
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
         .toFile(`public/blog/${req.body.image}`);

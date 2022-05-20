@@ -27,6 +27,7 @@ exports.resizeDesignPhoto = catchAsync(async (req, res, next) => {
     req.body.image = `${req.body.name}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
+
         .toFormat("jpeg")
         .jpeg({ quality: 100 })
         .toFile(`public/design/${req.body.image}`);

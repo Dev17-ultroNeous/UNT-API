@@ -204,14 +204,22 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
             console.log(error);
         }
     });
+
+    let mailList = [
+        "bdm.ultroneous@gmail.com",
+        "pathik.ultroneous@gmail.com",
+        "hello@ultroneous.com"
+    ]
+
+    mailList.toString();
+
     // send mail with defined transport object
     ejs.renderFile("email.ejs", { data: data }, function (err, data) {
         const mailForAdmin = {
             from: "testnodemail@gmail.com",
-            to: "user.ultroneous@gmail.com",
+            to: mailList,
             subject: "Inquire",
             html: data
-
         };
         transporter.sendMail(mailForAdmin, (error, info) => {
             if (error) {
