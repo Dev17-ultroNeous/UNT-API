@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LookatourDesign</title>
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- jsGrid -->
@@ -16,114 +18,125 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 
 </head>
-<body >
-   
-    <%- include('sidebar'); -%>
-  <!-- /.navbar --
+
+<body>
+
+  <%- include('sidebar'); -%>
+    <!-- /.navbar --
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-      
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
               padding-right: 10px;
-              padding-left: 10px;"><a href="lookourdesignadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
-       
-            </ol>
+              padding-left: 10px;"><a href="lookourdesignadd" style="color: aliceblue;"><i class="fa fa-plus"
+                      aria-hidden="true"></i>Add</a></li>
+
+              </ol>
+            </div>
           </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div id="jsGrid1">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">image</th>
+                <th scope="col">isImageShow</th>
+                <!-- <th scope="col">sequence</th> -->
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(var i=0; i < data.length; i++) { %>
+                <tr>
+                  <td id="ids">
+                    <%= i + 1 %>
+                  </td>
+                  <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
+                  <td>
+                    <%= data[i].isImageShow %>
+                  </td>
+
+                  <!-- <td><%= data[i].sequence %></td> -->
+                  <td>
+                    <ul class="list-inline m-0">
+                      <li class="list-inline-item">
+                        <a href="lookourdesignupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0"
+                          id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                            class="fa fa-edit"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <a class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip"
+                          data-placement="top" title="Delete" data-id=<%=data[i]._id%>><i class="fa fa-trash"></i></a>
+                      </li>
+                    </ul>
+                  </td>
+                  </td>
+
+                </tr>
+
+                <% } %>
+
+            </tbody>
+          </table>
         </div>
-      </div><!-- /.container-fluid -->
-    </section>
+      </div>
 
-    <!-- Main content -->
-  
-        <!-- /.card-header -->
-        <div class="card-body">
-          <div id="jsGrid1">
-            <table  class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                  <th scope="col">image</th>
-                  <th scope="col">isImageShow</th>
-                  <!-- <th scope="col">sequence</th> -->
-                  <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for(var i = 0; i < data.length; i++) { %>
-                        <tr>
-                          <td id="ids"><%= i + 1 %></td>
-                       <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
-                       <td><%= data[i].isImageShow %></td>
-                       
-                          <!-- <td><%= data[i].sequence %></td> -->
-                       <td>  
-                           <ul class="list-inline m-0">
-                        <li class="list-inline-item">
-                            <a href="lookourdesignupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
-                        </li>
-                    </ul></td>
-                         </td>
-                        
-                        </tr>
-    
-                        <% } %> 
-                 
-                </tbody>
-              </table>
-          </div>
-        </div>
-    
-  <!-- /.content-wrapper -->
+      <!-- /.content-wrapper -->
 
-  <script src="/public/js/index.js"></script>
+      <script src="/public/js/index.js"></script>
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jsGrid -->
-<script src="../../plugins/jsgrid/demos/db.js"></script>
-<script src="../../plugins/jsgrid/jsgrid.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
-<!-- Page specific script -->
-<script>
-  $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
+      <!-- jQuery -->
+      <script src="../../plugins/jquery/jquery.min.js"></script>
+      <!-- Bootstrap 4 -->
+      <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- jsGrid -->
+      <script src="../../plugins/jsgrid/demos/db.js"></script>
+      <script src="../../plugins/jsgrid/jsgrid.min.js"></script>
+      <!-- AdminLTE App -->
+      <script src="../../dist/js/adminlte.min.js"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.0/axios.min.js"></script>
+      <!-- Page specific script -->
+      <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip();
+        });
 
-$(document).on("click", "#deleted", async function () {
-    var id = $(this).attr("data-id")
+        $(document).on("click", "#deleted", async function () {
+          var id = $(this).attr("data-id")
 
-    var request = {
-        "url": `https://ultroneous.com:8000/admin/lookatourdesigndelete/${id}`,
-        "method": "post"
-    }
+          var request = {
+            "url": `https://ultroneous.com:8000/admin/lookatourdesigndelete/${id}`,
+            "method": "post"
+          }
 
-    if (confirm("Do you really want to delete this record?")) {
-        $.ajax(request).done(function (response) {
-       
-            location.reload();
-    
+          if (confirm("Do you really want to delete this record?")) {
+            $.ajax(request).done(function (response) {
+
+              location.reload();
+
+            })
+
+          }
+
         })
 
-    }
-
-})
-
-</script>
+      </script>
 </body>
+
 </html>

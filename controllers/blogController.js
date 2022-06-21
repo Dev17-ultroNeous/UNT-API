@@ -3,7 +3,7 @@ const sharp = require("sharp");
 const Blog = require("../models/blogModel");
 const catchAsync = require("../utils/catchAsync");
 const catchAppError = require("../utils/catchAppError");
-
+const MetaTag = require("../models/metatagModel");
 
 const multerStorage = multer.memoryStorage();
 
@@ -39,7 +39,6 @@ exports.resizeBlogPhoto = catchAsync(async (req, res, next) => {
 exports.blogAdd = catchAsync(async (req, res, next) => {
 
     const data = await Blog.create({
-
         title: req.body.title,
         description: req.body.description,
         image: req.body.image,
@@ -49,6 +48,36 @@ exports.blogAdd = catchAsync(async (req, res, next) => {
     if (data) {
         res.redirect("./blogtable");
     }
+});
+
+exports.metaTagAdd = catchAsync(async (req, res, next) => {
+
+    const data = await MetaTag.create({
+        title: req.body.title,
+        metaTag: req.body.metaTag,
+        pageName: req.body.pageName
+    });
+
+    if (data) {
+        res.redirect("./meta-tag-table");
+    }
+});
+exports.getMetaTag = catchAsync(async (req, res, next) => {
+    const data = await MetaTag.find({})
+
+    res.status(200).json({
+        status: "success",
+        data,
+    });
+});
+exports.metaTagDelete = catchAsync(async (req, res, next) => {
+    const id = req.params.id;
+    const data = await MetaTag.findByIdAndDelete({ _id: id });
+
+    res.status(200).json({
+        status: "success",
+        data,
+    });
 });
 
 exports.getBlog = catchAsync(async (req, res, next) => {
@@ -88,5 +117,22 @@ exports.blogUpdate = catchAsync(async (req, res, next) => {
     );
     if (data) {
         res.redirect("./blogtable");
+    }
+});
+
+exports.metaTagUpdate = catchAsync(async (req, res, next) => {
+    const id = req.body.id
+    const data = await MetaTag.findByIdAndUpdate(
+        { _id: id },
+        {
+            title: req.body.title,
+            metaTag: req.body.metaTag,
+            pageName: req.body.pageName,
+
+        },
+        { new: true },
+    );
+    if (data) {
+        res.redirect("./meta-tag-table");
     }
 });

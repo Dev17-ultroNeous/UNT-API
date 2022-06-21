@@ -5,6 +5,12 @@ const jobRequirementsSchema = new Schema({
 
     name: {
         type: String
+    },
+
+    sequence: {
+        type: Number,
+        integer: true,
+        default: null
     }
 
 

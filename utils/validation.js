@@ -68,14 +68,10 @@ exports.validateTechnology = [
 ]
 
 exports.validateTrims = [
-
     check('description')
         .trim()
         .notEmpty()
         .withMessage('Please enter description. '),
-
-
-
     check('designation')
         .trim()
         .notEmpty()

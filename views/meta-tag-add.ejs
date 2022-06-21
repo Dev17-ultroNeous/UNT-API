@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TechnologyOfContactus-Update</title>
+    <title>Meta-Tag-add</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -26,15 +26,15 @@
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <%- include('sidebar'); -%>
+      <%- include('blog-sidebar'); -%>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-        
-           
+              <div class="col-sm-6"></div>
+            </div>
           </div>
           <!-- /.container-fluid -->
         </section>
@@ -49,39 +49,45 @@
                 <div class="card card-primary">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <b style="color: aliceblue">Update</b>
+                      <b style="color: aliceblue">Add</b>
                     </h3>
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form
-                    action="/admin/technologyofcontactusupdate"
-                    method="post"
-                  >
+                  <form action="/admin/metatagadd" method="post">
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input
-                          type="hidden"
-                          name="id"
-                          value="<%= data._id %>"
-                        />
+                        <label for="exampleInputPassword1">Title</label>
                         <input
                           type="text"
-                          name="name"
+                          name="title"
                           class="form-control"
                           id="exampleInputPassword1"
-                          value="<%= data.name%>"
+                          placeholder="Enter Title"
                           required
                         />
                       </div>
-
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Type</label><br />
-                        <input type="radio" name="type" value="	technology" />
-                        Technology
-                        <br />
-                        <input type="radio" name="type" value="	other" /> Other
+                        <label for="exampleInputPassword1">MetaTag</label>
+                        <input
+                          type="text"
+                          name="metaTag"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter metaTag"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">pageName</label>
+                        <input
+                          type="text"
+                          name="pageName"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter pageName"
+                          required
+                        />
                       </div>
                     </div>
                     <!-- /.card-body -->
@@ -107,7 +113,6 @@
       </div>
       <!-- /.content-wrapper -->
       <footer class="main-footer">
-     
         <strong
           >Copyright &copy;
           <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong
@@ -133,20 +138,8 @@
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <!-- Page specific script -->
-
-    <script>
-      $("#quickForm").submit(async function (event) {
-        event.preventDefault();
-
-        var unindexed_array = $(this).serializeArray();
-        var data = {};
-
-        $.map(unindexed_array, function (n, i) {
-          data[n["name"]] = n["value"];
-        });
-      });
-    </script>
+    <script></script>
   </body>
 </html>

@@ -45,7 +45,7 @@
                 <div class="card card-primary">
                   <div class="card-header">
                     <h3 class="card-title">
-                      <b style="color: aliceblue">Add</b>
+                      <b style="color: aliceblue">Update</b>
                     </h3>
                   </div>
                   <!-- /.card-header -->
@@ -66,6 +66,18 @@
                           id="exampleInputEmail1"
                           placeholder="Enter name"
                           value="<%=data.name %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Sequence</label>
+                        <input
+                          type="text"
+                          name="sequence"
+                          class="form-control"
+                          id="sequence"
+                          placeholder="Sequence"
+                          value="<%=data.sequence %>"
                           required
                         />
                       </div>

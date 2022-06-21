@@ -22,8 +22,12 @@ const technologyOfJobSchema = new Schema(
                 technologyName: String,
                 count: Number
             }
-        ]
-
+        ],
+        sequence: {
+            type: Number,
+            integer: true,
+            default: null
+        }
 
     },
     { timestamps: true }

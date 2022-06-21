@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TechnologyOfContactus-Update</title>
+    <title>Meta-Tag-Update</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link
@@ -26,15 +26,15 @@
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <%- include('sidebar'); -%>
+      <%- include('blog-sidebar'); -%>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-        
-           
+              <div class="col-sm-6"></div>
+            </div>
           </div>
           <!-- /.container-fluid -->
         </section>
@@ -54,34 +54,49 @@
                   </div>
                   <!-- /.card-header -->
                   <!-- form start -->
-                  <form
-                    action="/admin/technologyofcontactusupdate"
-                    method="post"
-                  >
+                  <form action="/admin/meta-tag-update" method="post">
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
+                        <label for="exampleInputPassword1">Title</label>
                         <input
                           type="hidden"
                           name="id"
                           value="<%= data._id %>"
                         />
+
                         <input
                           type="text"
-                          name="name"
+                          name="title"
                           class="form-control"
                           id="exampleInputPassword1"
-                          value="<%= data.name%>"
+                          placeholder="Enter Title"
+                          value="<%= data.title %>"
                           required
                         />
                       </div>
-
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Type</label><br />
-                        <input type="radio" name="type" value="	technology" />
-                        Technology
-                        <br />
-                        <input type="radio" name="type" value="	other" /> Other
+                        <label for="exampleInputPassword1">MetaTag</label>
+                        <input
+                          type="text"
+                          name="metaTag"
+                          class="form-control"
+                          id="exampleInputPassword1"
+                          placeholder="Enter MetaTag"
+                          value="<%= data.metaTag %>"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">PageName</label>
+
+                        <input
+                          type="text"
+                          name="pageName"
+                          class="form-control"
+                          id="exampleInputEmail1"
+                          placeholder="Enter PageName"
+                          value="<%= data.pageName %>"
+                        />
                       </div>
                     </div>
                     <!-- /.card-body -->
@@ -107,7 +122,6 @@
       </div>
       <!-- /.content-wrapper -->
       <footer class="main-footer">
-     
         <strong
           >Copyright &copy;
           <a href="https://ultroneous.com"> 2022 ultroNeous</a>.</strong

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog-login</title>
+  <title>login</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -55,24 +55,21 @@
               </div>
             </div>
           </div>
-           <div class="forget" style="padding-left: 11.5rem">
+          <div class="forget" style="padding-left: 11.5rem">
             <a href="#" data-toggle="modal" data-target="#exampleModal" id="edit" data-toggle="tooltip"
               data-placement="top" title="View">Forget Password <i class="fa fa-arrow-right" aria-hidden="true"
                 style="font-size: 14px;"></i></a>
           </div>
-          <div class="row">
-            <div class="col-8"></div>
-            <!-- /.col -->
+          <!-- /.col -->
 
-            <!-- /.col -->
-          </div>
+          <!-- /.col -->
+
           <div class="col-4">
             <button class="btn btn-primary btn-block" id="signin" onclick="login()">
               Sign In
             </button>
           </div>
-          <br>
-          <p id="demo" style="color: red"></p>
+
         </form>
 
         <!-- /.social-auth-links -->
@@ -137,14 +134,18 @@
     </div>
   </div>
   <!-- /.login-box -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+
+  </script>
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
+  <script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../../dist/js/adminlte.min.js"></script>
-  
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript">
     const login = () => localStorage.setItem("authorized", "ultroneous")
     $(document).on("click", "#signin", async function (e) {
@@ -153,32 +154,33 @@
       let password = document.getElementById('password').value
       let data = Object.assign({ email }, { password });
 
-      const res = await axios.post('http://localhost:8000/admin/blogersignin', data)
+      const res = await axios.post('http://localhost:8000/admin/signininquiry', data)
         .then(res => res)
         .catch(error => error)
 
-      if (res.data.message === 'Successfully SignIn') {
-        window.location.href = ('http://localhost:8000/admin/blogtable')
+
+      if (res.data.status === 'success') {
+        window.location.href = ('http://localhost:8000/admin/contactustable')
       } else if (res) {
         alert(res.data.message)
       }
     })
 
-  $(document).on("click", "#send", async function (e) {
+    $(document).on("click", "#send", async function (e) {
       e.preventDefault()
       let email = document.getElementById('email-password').value
-      let data = Object.assign({ email });
+      let data=  Object.assign({ email });
 
-      const res = await axios.post('http://localhost:8000/admin/sendforgetpasswordmailforlogin', data)
+      const res = await axios.post('http://localhost:8000/admin/sendforgetpasswordmail', data)
         .then(res => res.data)
         .catch(error => error)
 
-      if (res.status === 'success') {
+   if(res.status==='success'){
         alert("E-mail send successfully Please check your email.")
         location.reload()
-      } else {
-        alert("Invaild email.")
-      }
+   }else{
+      alert("Invaild email.")
+   }
     })
 
   </script>
@@ -186,4 +188,5 @@
 
 </html>
 </body>
+
 </html>

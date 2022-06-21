@@ -7,16 +7,18 @@ const TechnologyOfJob = require("../models/technologyOfJobRequirementModel");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const ejs = require("ejs");
-let alert = require('alert-node');
+let alert = require("alert-node");
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 exports.jobRequirements = catchAsync(async (req, res, next) => {
-
     let value = await JobRequirements.findOne({ name: req.body.name });
     if (value) {
-        return alert("This field is already added.")
+        return alert("This field is already added.");
     } else {
         const data = await JobRequirements.create({
             name: req.body.name,
+            sequence: req.body.sequence,
         });
         if (data) {
             res.redirect("./jobrequirementtable");
@@ -25,30 +27,37 @@ exports.jobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.jobRequirementsDelete = catchAsync(async (req, res, next) => {
-    // .findByIdAndDelete({ departmentId: req.params.id });
-    const value = await TechnologyOfJob.findOneAndDelete({ departmentId: req.body.id })
+
+    const value = await TechnologyOfJob.findOneAndDelete({
+        departmentId: req.body.id,
+    });
     const data = await JobRequirements.findOneAndDelete({ _id: req.body.id });
     res.status(200).json({
         status: "success",
         data,
-        value
+        value,
     });
 });
 exports.jobRequirementsUpdate = catchAsync(async (req, res, next) => {
     const value = await JobRequirements.findOneAndUpdate(
         { _id: req.body.id },
-        { name: req.body.name },
+        {
+            name: req.body.name,
+            sequence: req.body.sequence,
+        },
         { new: true }
     );
     const data = await TechnologyOfJob.findOneAndUpdate(
         { departmentId: req.body.id },
-        { departmentName: req.body.name },
+        {
+            departmentName: req.body.name,
+            sequence: req.body.sequence,
+        },
         { new: true }
     );
     if (data || value) {
-        res.redirect("./jobtechnologytable");
+        res.redirect("./jobrequirementtable");
     }
-
 });
 
 exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
@@ -77,6 +86,7 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             departmentName: value.name,
             departmentId: id,
             fieldCount: 1,
+            sequence: req.body.sequence,
             technology: {
                 technologyName: technologyName,
                 count: count,
@@ -86,91 +96,94 @@ exports.technologyOfJobRequirements = catchAsync(async (req, res, next) => {
             res.redirect("./jobtechnologytable");
         }
     } else {
-        return alert("Please enter valid id.")
+        return alert("Please enter valid id.");
     }
 });
 
-exports.technologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
-    const id = req.body.id;
-    const mainiId = req.body.mainiId;
-    if (mainiId) {
-        const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId })
+exports.technologyOfJobRequirementsDelete = catchAsync(
+    async (req, res, next) => {
+        const id = req.body.id;
+        const mainiId = req.body.mainiId;
+        if (mainiId) {
+            const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId });
+            res.status(200).json({
+                status: "success",
+                data,
+            });
+        }
+        let technologyId = req.body.technologyId;
+        let addData = await TechnologyOfJob.findOne({ departmentId: id });
+
+        let array = addData.technology;
+
+        const checkValue = array.filter(function (el) {
+            return JSON.stringify(el._id) !== JSON.stringify(technologyId);
+        });
+
+        const data = await TechnologyOfJob.findOneAndUpdate(
+            { departmentId: id },
+            {
+                technology: checkValue,
+                fieldCount: checkValue.length
+            },
+            { new: true }
+        );
+
         res.status(200).json({
             status: "success",
             data,
         });
     }
-    let technologyId = req.body.technologyId
-    let addData = await TechnologyOfJob.findOne({ departmentId: id });
+);
 
-    let array = addData.technology
+exports.mainTechnologyOfJobRequirementsDelete = catchAsync(
+    async (req, res, next) => {
+        const mainiId = req.body.mainiId;
 
-    const checkValue = array.filter((function (el) {
-        return JSON.stringify(el._id) !== JSON.stringify(technologyId);
-    }));
+        const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId });
+        res.status(200).json({
+            status: "success",
+            data,
+        });
+    }
+);
 
-    const data = await TechnologyOfJob.findOneAndUpdate(
-        { departmentId: id },
-        {
-            technology: checkValue
-        },
-        { new: true }
-    );
+exports.technologyOfJobRequirementsUpdate = catchAsync(
+    async (req, res, next) => {
+        const id = req.body.id;
+        let technologyId = req.body.technologyId;
+        let technologyName = req.body.technologyName;
+        let count = req.body.count;
+        let addData = await TechnologyOfJob.findOne({ departmentId: id });
 
-    res.status(200).json({
-        status: "success",
-        data,
-    });
-});
+        let array = addData.technology;
 
-exports.mainTechnologyOfJobRequirementsDelete = catchAsync(async (req, res, next) => {
+        const checkValue = array.filter(function (el) {
+            return JSON.stringify(el._id) !== JSON.stringify(technologyId);
+        });
 
-    const mainiId = req.body.mainiId;
+        checkValue.push({ technologyName, count });
 
-    const data = await TechnologyOfJob.findOneAndDelete({ _id: mainiId })
-    res.status(200).json({
-        status: "success",
-        data,
-    });
+        const data = await TechnologyOfJob.findOneAndUpdate(
+            { departmentId: id },
+            {
+                technology: checkValue,
 
-});
+            },
+            { new: true }
+        );
 
-exports.technologyOfJobRequirementsUpdate = catchAsync(async (req, res, next) => {
-    const id = req.body.id;
-    let technologyId = req.body.technologyId
-    let technologyName = req.body.technologyName;
-    let count = req.body.count;
-    let addData = await TechnologyOfJob.findOne({ departmentId: id });
-
-    let array = addData.technology
-
-    const checkValue = array.filter((function (el) {
-        return JSON.stringify(el._id) !== JSON.stringify(technologyId);
-    }));
-
-    checkValue.push({ technologyName, count });
-
-    const data = await TechnologyOfJob.findOneAndUpdate(
-        { departmentId: id },
-        {
-
-            technology: checkValue,
-        },
-        { new: true }
-    );
-
-    res.status(200).json({
-        status: "success",
-        data
-    });
-});
-
-
+        res.status(200).json({
+            status: "success",
+            data,
+        });
+    }
+);
 
 exports.getJobRequirements = catchAsync(async (req, res, next) => {
-    let data = await JobRequirements.find({}).sort([["createdAt", 1]])
+    let data = await JobRequirements.find({}).sort([["sequence", 1]]);
 
-    let technology = await TechnologyOfJob.find({}).sort([["createdAt", 1]])
+    let technology = await TechnologyOfJob.find({}).sort([["sequence", 1]]);
     res.status(200).json({
         data,
         technology,
@@ -178,7 +191,6 @@ exports.getJobRequirements = catchAsync(async (req, res, next) => {
 });
 
 exports.contactUsData = catchAsync(async (req, res, next) => {
-
     const data = await ContactUs.create({
         checklist: req.body.checklist,
         hireteam: req.body.hireteam,
@@ -208,8 +220,8 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
     let mailList = [
         "bdm.ultroneous@gmail.com",
         "pathik.ultroneous@gmail.com",
-        "hello@ultroneous.com"
-    ]
+        "hello@ultroneous.com",
+    ];
 
     mailList.toString();
 
@@ -219,7 +231,7 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
             from: "testnodemail@gmail.com",
             to: mailList,
             subject: "Inquire",
-            html: data
+            html: data,
         };
         transporter.sendMail(mailForAdmin, (error, info) => {
             if (error) {
@@ -227,7 +239,6 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
             }
         });
     });
-
 
     ejs.renderFile("test.ejs", { name: req.body.name }, function (err, data) {
         const mailForUser = {
@@ -242,8 +253,135 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
                 return console.log(error);
             }
         });
-
     });
+    res.status(200).json({
+        status: "success",
+        data,
+    });
+});
+
+exports.forgetPasswordEmail = catchAsync(async (req, res, next) => {
+    const data = await User.findOne({ email: req.body.email });
+
+    if (data) {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465, //465 is always ture//other port is false
+            secure: true,
+            service: "Gmail",
+
+            auth: {
+                user: "user.ultroneous@gmail.com",
+                pass: "ubpbmsthrpozoiai",
+            },
+        });
+        transporter.verify((error, success) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+
+        ejs.renderFile("forgetpassword.ejs", { data: data }, function (err, data) {
+            const mailForUser = {
+                from: "testnodemail@gmail.com",
+                to: req.body.email,
+                subject: "Inquire",
+                html: data,
+            };
+
+            transporter.sendMail(mailForUser, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+            });
+        });
+        res.status(200).json({
+            status: "success",
+        });
+    } else {
+        res.status(200).json({
+            status: "fail",
+            message: "Invaild details",
+        });
+    }
+});
+
+exports.forgetPasswordEmailForLogin = catchAsync(async (req, res, next) => {
+    const data = await User.findOne({ email: req.body.email });
+
+    if (data) {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465, //465 is always ture//other port is false
+            secure: true,
+            service: "Gmail",
+
+            auth: {
+                user: "user.ultroneous@gmail.com",
+                pass: "ubpbmsthrpozoiai",
+            },
+        });
+        transporter.verify((error, success) => {
+            if (error) {
+                console.log(error);
+            }
+        });
+
+        ejs.renderFile("loginemail.ejs", { data: data }, function (err, data) {
+            const mailForUser = {
+                from: "testnodemail@gmail.com",
+                to: req.body.email,
+                subject: "Inquire",
+                html: data,
+            };
+
+            transporter.sendMail(mailForUser, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+            });
+        });
+        res.status(200).json({
+            status: "success",
+        });
+    } else {
+        res.status(200).json({
+            status: "fail",
+            message: "Invaild details",
+        });
+    }
+});
+
+exports.forgetPasswordForLogin = catchAsync(async (req, res, next) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(req.body.newPassword, salt);
+
+    const data = await User.findOneAndUpdate(
+        { _id: req.body.id },
+        {
+            password: hashpassword,
+        },
+        { new: true }
+    );
+
+    res.status(200).json({
+        status: "success",
+        data,
+    });
+});
+
+exports.forgetPassword = catchAsync(async (req, res, next) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashpassword = await bcrypt.hash(req.body.newPassword, salt);
+
+    const data = await User.findOneAndUpdate(
+        { _id: req.body.id },
+        {
+            inquiryPassword: hashpassword,
+        },
+        { new: true }
+    );
+
     res.status(200).json({
         status: "success",
         data,
@@ -255,7 +393,10 @@ exports.getContactUsData = catchAsync(async (req, res, next) => {
     const limits = parseInt(limit);
     const skip = (page - 1) * limit;
     const total_documents = await ContactUs.countDocuments();
-    const data = await ContactUs.find({}).sort([["createdAt", -1]]).limit(limits).skip(skip)
+    const data = await ContactUs.find({})
+        .sort([["createdAt", -1]])
+        .limit(limits)
+        .skip(skip);
     res.status(200).json({
         status: "success",
         data,
@@ -264,7 +405,6 @@ exports.getContactUsData = catchAsync(async (req, res, next) => {
 });
 
 exports.technologiesOfContactUs = catchAsync(async (req, res, next) => {
-
     const data = await TechnologiesOfContactUs.create({
         name: req.body.name,
         type: req.body.type,
@@ -275,29 +415,29 @@ exports.technologiesOfContactUs = catchAsync(async (req, res, next) => {
 });
 
 exports.technologiesOfContactUsDelete = catchAsync(async (req, res, next) => {
-    const data = await TechnologiesOfContactUs.findByIdAndDelete({ _id: req.params.id });
+    const data = await TechnologiesOfContactUs.findByIdAndDelete({
+        _id: req.params.id,
+    });
     res.status(200).json({
         status: "success",
         data,
     });
-
 });
 
 exports.technologiesOfContactUsUpdate = catchAsync(async (req, res, next) => {
-
-    const data = await TechnologiesOfContactUs.findByIdAndUpdate({ _id: req.body.id },
+    const data = await TechnologiesOfContactUs.findByIdAndUpdate(
+        { _id: req.body.id },
         {
             name: req.params.name,
-            type: req.body.type
+            type: req.body.type,
         },
-        { new: true });
+        { new: true }
+    );
 
     if (data) {
         res.redirect("./technologyofcontactustable");
     }
-
 });
-
 
 exports.getTechnologiesOfContactUs = catchAsync(async (req, res, next) => {
     const technology = await TechnologiesOfContactUs.find({ type: "technology" });

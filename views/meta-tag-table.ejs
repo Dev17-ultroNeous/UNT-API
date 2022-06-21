@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog</title>
+  <title>Meta-Tag</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -35,7 +35,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item" style="background-color: #007bff; color: aliceblue; margin-top: 44px;
               padding-right: 10px;
-              padding-left: 10px;"><a href="blogadd" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
+              padding-left: 10px;"><a href="meta-tag-add" style="color: aliceblue;"><i class="fa fa-plus" aria-hidden="true"></i>Add</a></li>
        
             </ol>
           </div>
@@ -54,26 +54,22 @@
                     <th scope="col" class="font">#</th>
              
                     <th scope="col" class="font">Title</th>
-                    <th scope="col" class="font">Description</th>
-                    <th scope="col" class="font">Link</th>            
-                  <th scope="col" class="font">Image</th>
+                    <th scope="col" class="font">metaTag</th>
+                    <th scope="col" class="font">pageName</th>           
                   <th scope="col"></th>
-                  <th scope="col"></th>
+         
                   </tr>
                 </thead>
                 <tbody>
                   <% for(var i = 0; i < data.length; i++) { %>
                         <tr>
-                          <td id="ids"><%= i + 1 %></td>
-                     
+                          <td id="ids"><%= i + 1 %></td>              
                           <td><%= data[i].title %></td>
-                          <td><%= data[i].description %></td>   
-                          <td><%= data[i].link %></td>                       
-                       <td><img src="<%= data[i].image %>" style="width: 2.5rem; height: 2.5rem;"></td>
-           
+                          <td><%= data[i].metaTag %></td>   
+                          <td><%= data[i].pageName %></td>                                       
                        <td>
-                            <a href="blogupdate?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a></td>                                                                                  
-                         <td> <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a>
+                            <a href="meta-tag-update?id=<%= data[i]._id%>" class="btn btn-success btn-sm rounded-0" id="edit" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>                                                                              
+                       <a  class="btn btn-danger btn-sm rounded-0" id="deleted" data-toggle="tooltip" data-placement="top" title="Delete" data-id=<%= data[i]._id%>><i class="fa fa-trash"></i></a></td>    
                        </td>     
                         </tr>
     
@@ -85,7 +81,7 @@
         </div>
     
   <!-- /.content-wrapper -->
-
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/public/js/index.js"></script>
   <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -96,6 +92,7 @@
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
+
 <!-- Page specific script -->
 <script>
 
@@ -104,19 +101,14 @@
 });
 
 $(document).on("click", "#deleted", async function () {
-    var id = $(this).attr("data-id")
-    var request = {
-        "url": `https://ultroneous.com:8000/admin/blogdelete/${id}`,
-        "method": "post"
-    }
-
+    let id = $(this).attr("data-id")  
+      let res = await axios.post(`http://localhost:8000/admin/metatagdelete/${id}`)
     if (confirm("Do you really want to delete this record?")) {
-        $.ajax(request).done(function (response) {         
+        $.ajax(res).done(function () {       
             location.reload();    
         })
 
     }
-
 })
 
 </script>

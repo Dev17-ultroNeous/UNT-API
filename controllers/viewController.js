@@ -14,6 +14,8 @@ const LookAtOurDesign = require("../models/lookAtOurDesignModel");
 const JobRequirements = require("../models/jobRequirementsModel");
 const multer = require("multer");
 const sharp = require("sharp");
+const metaTag = require("../models/metatagModel");
+const MetaTag = require("../models/metatagModel");
 
 exports.getView = catchAsync(async (req, res, next) => {
 
@@ -157,6 +159,20 @@ exports.listOfServiceTable = catchAsync(async (req, res, next) => {
         data: data,
     })
 })
+
+exports.contactusLogin = catchAsync(async (req, res, next) => {
+    res.render('contactuslogin')
+})
+exports.forgetPasswordLink = catchAsync(async (req, res, next) => {
+    res.render('forgetpasswordlink')
+})
+exports.loginForgetPassword = catchAsync(async (req, res, next) => {
+    res.render('loginforgetpassword')
+})
+exports.blogForgetPassword = catchAsync(async (req, res, next) => {
+    res.render('blogforgetpassword')
+})
+
 exports.contactUsTable = catchAsync(async (req, res, next) => {
     const data = await ContactUs.find({})
     res.render('contactustable', {
@@ -180,10 +196,6 @@ exports.contactUsTablePage = catchAsync(async (req, res, next) => {
         pages: Math.ceil(count / perPage)
     })
 })
-
-
-
-
 
 exports.technologyOfContactUsTable = catchAsync(async (req, res, next) => {
     const data = await TechnologiesOfContactUs.find({}).sort([["createdAt", -1]]);
@@ -239,7 +251,9 @@ exports.portfolioAdd = catchAsync(async (req, res, next) => {
 exports.blogAdd = catchAsync(async (req, res, next) => {
     res.render('blogadd')
 })
-
+exports.metaTagAdd = catchAsync(async (req, res, next) => {
+    res.render('meta-tag-add')
+})
 exports.blogUpdate = catchAsync(async (req, res, next) => {
     let data = await Blog.findById({ _id: req.query.id });
     data.image = process.env.API_URL + "/public/blog/" + data.image;
@@ -247,6 +261,13 @@ exports.blogUpdate = catchAsync(async (req, res, next) => {
         data: data
     })
 })
+exports.metaTagUpdate = catchAsync(async (req, res, next) => {
+    let data = await MetaTag.findById({ _id: req.query.id });
+    res.render('meta-tag-update', {
+        data: data
+    })
+})
+
 
 exports.blogTable = catchAsync(async (req, res, next) => {
     let data = await Blog.find({});
@@ -254,6 +275,12 @@ exports.blogTable = catchAsync(async (req, res, next) => {
         el.image = process.env.API_URL + "/public/blog/" + el.image;
     });
     res.render('blogtable', {
+        data: data
+    })
+})
+exports.metaTagTable = catchAsync(async (req, res, next) => {
+    let data = await metaTag.find({});
+    res.render('meta-tag-table', {
         data: data
     })
 })
@@ -266,14 +293,7 @@ exports.portfolioTable = catchAsync(async (req, res, next) => {
         data: data
     })
 })
-exports.technologyTable = catchAsync(async (req, res, next) => {
-    const data = await TechnologyOfJob.find({}).sort([["createdAt", 1]]);
-    // const value = await JobRequirements.find({}).sort([["createdAt", 1]]);
-    res.render('technologytable', {
-        data: data
 
-    })
-})
 
 exports.jobTechnologyTable = catchAsync(async (req, res, next) => {
     const data = await TechnologyOfJob.find({})
@@ -335,7 +355,7 @@ exports.portfolioUpdate = catchAsync(async (req, res, next) => {
 
 exports.JobRequirementTable = catchAsync(async (req, res, next) => {
 
-    let data = await JobRequirements.find({});
+    let data = await JobRequirements.find({}).sort([["sequence", 1]]);
     res.render('jobrequirementtable', {
         data: data
     })

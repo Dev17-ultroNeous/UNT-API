@@ -14,12 +14,15 @@ const userSchema = new Schema({
         type: String,
 
     },
+    inquiryPassword: {
+        type: String
+    },
     phone: {
         type: Number,
     },
     role: {
         type: String,
-        enum: ['user', 'admin'],
+        enum: ['user', 'admin', 'bloger'],
         default: 'user'
     }
 
