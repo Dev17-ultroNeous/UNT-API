@@ -4,16 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
+
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <script
-      src="https://kit.fontawesome.com/a076d05399.js"
-      crossorigin="anonymous"
-    ></script>
+
     <style>
       * {
         box-sizing: border-box;
@@ -48,7 +44,7 @@
       }
       .wrapper-2 p {
         margin: 0;
-        font-size: 1.3em;
+        font-size: 20px;
         color: #aaa;
         font-family: "Source Sans Pro", sans-serif;
         letter-spacing: 1px;
@@ -69,19 +65,38 @@
         padding: 6px;
         text-align: center;
       }
-      .footer-like p {
-        margin: 0;
+      .link a {
+        text-decoration: none;
+      }
+      .details {
+        text-decoration: none;
+        color: #4b7edb;
+        font-weight: 500;
         padding: 4px;
         color: #5892ff;
         font-family: "Source Sans Pro", sans-serif;
         letter-spacing: 1px;
+        text-align: center;
       }
-      .footer-like p a {
-        text-decoration: none;
+      .text {
         color: #4b7edb;
         font-weight: 600;
+        font-size: 18px;
+        text-decoration: none;
       }
-
+      .follow {
+        font-size: 18px;
+        position: relative;
+        top: 0.5rem;
+      }
+      .link {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding-left: 17rem;
+        padding-right: 17rem;
+        padding-top: 1rem;
+      }
       @media (min-width: 360px) {
         h1 {
           font-size: 3.5em;
@@ -89,16 +104,19 @@
         .go-home {
           margin-bottom: 20px;
         }
+        .wrapper-1 {
+          height: auto;
+          max-width: fit-content;
+          margin: 0 auto;
+          margin-top: 50px;
+          box-shadow: 4px 8px 40px 8px #4c83e833;
+        }
       }
 
       @media (min-width: 600px) {
-        .content {
-          max-width: 1000px;
-          margin: 0 auto;
-        }
         .wrapper-1 {
-          height: initial;
-          max-width: 620px;
+          height: auto;
+          max-width: 47rem;
           margin: 0 auto;
           margin-top: 50px;
           box-shadow: 4px 8px 40px 8px #4c83e833;
@@ -110,33 +128,189 @@
     <div class="content">
       <div class="wrapper-1">
         <div class="wrapper-2">
-       
-   
-          <h1>Thank you!</h1>
-          <p>We Will Contact You Soon...</p>
+          <div class="logo">
+            <img
+              src="https://d1fdloi71mui9q.cloudfront.net/gQutfzXhTjehiWcHawv9_gYa6dKayFJ1OanGB"
+              alt="logo"
+              width="100"
+              height="100"
+            />
+            <div class="textLogo">
+              <h1
+                style="
+                  color: rgb(0, 0, 0);
+                  font-size: 16px;
+                  line-height: 1.5;
+                  font-weight: 500;
+                  text-align: center;
+                "
+              >
+                ultroNeous Technologies
+              </h1>
+              <p
+                style="
+                  text-align: center;
+                  line-height: 1.5;
+                  font-size: 14px;
+                  margin-top: -1rem;
+                  color: rgba(0, 0, 0, 0.6);
+                  font-weight: 500;
+                  margin-top: -1rem;
+                "
+              >
+                𝗪𝗲𝗯 & 𝗠𝗼𝗯𝗶𝗹𝗶𝘁𝘆 𝗘𝘅𝗽𝗲𝗿𝘁𝘀 | 𝐔𝐈/𝐔𝐗 𝗖𝗿𝗲𝗮𝘁𝗼𝗿𝘀
+              </p>
+            </div>
+          </div>
+          <h1 style="padding-top: 1rem; text-align: center">Thank you!</h1>
+          <p class="details">
+            We've received your message. One of our teammate will get back in
+            touch with you soon!
+          </p>
           <br />
-          <a
-            href="https://linktr.ee/ultroneous"
-            style=" font-size: 14px"
-            >Follow Us <i class='fas fa-arrow-right' style='font-size:24px'></i></i
-          ></a>
+          <div class="aboutus">
+            <img
+              src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/7066/Our_Company_image.png"
+            />
+            <h1
+              style="
+                margin: 0;
+                color: #2a3940;
+                direction: ltr;
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: normal;
+                line-height: 120%;
+                text-align: center;
+                padding-top: 2rem;
+              "
+            >
+              About our company
+            </h1>
+            <p
+              style="
+                color: #2a3940;
+                direction: ltr;
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: normal;
+                line-height: 120%;
+                text-align: center;
+                padding-top: 1rem;
+              "
+            >
+              Core values of excellence, growth, customer satisfaction and
+              freedom. We are committed to finding the best solutions with
+              exceeding your expectations and gaining trust. We are sure to
+              remove the technology obstacles, product quality issues, lack of
+              suggestions and many other issues which global clients are facing
+              at the moment, with our ultroGagement.
+            </p>
+          </div>
+
+          <div class="link">
+            <a
+              href="https://www.facebook.com/ultroneous.technologies"
+              target="_blank"
+              ><img
+                src="https://d1fdloi71mui9q.cloudfront.net/AMeBkJyuR6ubHBGwDJ55_Instagram-03.png"
+                alt="facebook"
+                width="36"
+                height="36"
+                style="
+                  border-width: 0;
+                  max-width: 36px;
+                  height: auto;
+                  display: block;
+                  max-height: 36px;
+                "
+            /></a>
+
+            <a href="#" target="_blank"
+              ><img
+                src="https://d1fdloi71mui9q.cloudfront.net/T7pfEb3MRJqgTUoV45pf_Linkedin-05.png"
+                alt="twitter"
+                width="36"
+                height="36"
+                style="
+                  border-width: 0;
+                  max-width: 36px;
+                  height: auto;
+                  display: block;
+                  max-height: 36px;
+                "
+            /></a>
+
+            <a href="#" target="_blank"
+              ><img
+                src="https://d1fdloi71mui9q.cloudfront.net/De9A4W2lR1OmU2ur3rY5_Dribble-09.png"
+                alt="linkedin"
+                width="36"
+                height="36"
+                style="
+                  border-width: 0;
+                  max-width: 36px;
+                  height: auto;
+                  display: block;
+                  max-height: 36px;
+                "
+            /></a>
+
+            <a href="#" target="_blank"
+              ><img
+                src="https://d1fdloi71mui9q.cloudfront.net/2Nkt6bfVS9eXB4sqltBs_1-02.png"
+                alt="linkedin"
+                width="36"
+                height="36"
+                style="
+                  border-width: 0;
+                  max-width: 36px;
+                  height: auto;
+                  display: block;
+                  max-height: 36px;
+                "
+            /></a>
+          </div>
+
+          <div
+            style="
+              font-size: 12px;
+              text-align: center;
+              align-items: center;
+              color: #66787f;
+              line-height: 1.2;
+              padding-top: 1rem;
+              font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            "
+          >
+            <p style="margin: 0; font-size: 14px">
+              <a
+                href=" http://www.example.com"
+                rel="noopener"
+                style="text-decoration: underline; color: #0068a5"
+                target="_blank"
+                >Contact Us</a
+              >
+              |
+              <a
+                href=" http://www.example.com"
+                rel="noopener"
+                style="text-decoration: underline; color: #0068a5"
+                target="_blank"
+                >subscribe</a
+              >
+            </p>
+          </div>
+
+          <!-- <div>
+            <a href="https://linktr.ee/ultroneous" class="follow"
+              >Follow Us <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div> -->
         </div>
       </div>
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

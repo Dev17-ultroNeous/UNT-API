@@ -190,6 +190,8 @@ exports.getJobRequirements = catchAsync(async (req, res, next) => {
     });
 });
 
+//============ContactUs page with email ===========================//
+
 exports.contactUsData = catchAsync(async (req, res, next) => {
     const data = await ContactUs.create({
         checklist: req.body.checklist,
@@ -216,35 +218,38 @@ exports.contactUsData = catchAsync(async (req, res, next) => {
             console.log(error);
         }
     });
+    //==================================mail for admin ===========================//
 
-    let mailList = [
-        "bdm.ultroneous@gmail.com",
-        "pathik.ultroneous@gmail.com",
-        "hello@ultroneous.com",
-    ];
+    // let mailList = [
+    //     "bdm.ultroneous@gmail.com",
+    //     "pathik.ultroneous@gmail.com",
+    //     "hello@ultroneous.com",
+    // ];
 
-    mailList.toString();
+    // mailList.toString();
 
-    // send mail with defined transport object
-    ejs.renderFile("email.ejs", { data: data }, function (err, data) {
-        const mailForAdmin = {
-            from: "testnodemail@gmail.com",
-            to: mailList,
-            subject: "Inquire",
-            html: data,
-        };
-        transporter.sendMail(mailForAdmin, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-        });
-    });
+    //send mail with defined transport object
+    // ejs.renderFile("email.ejs", { data: data }, function (err, data) {
+    //     const mailForAdmin = {
+    //         from: "testnodemail@gmail.com",
+    //         to: mailList,
+    //         subject: "Inquire",
+    //         html: data,
+    //     };
+    //     transporter.sendMail(mailForAdmin, (error, info) => {
+    //         if (error) {
+    //             return console.log(error);
+    //         }
+    //     });
+    // });
+
+    //===================================mail for user ==============================//
 
     ejs.renderFile("test.ejs", { name: req.body.name }, function (err, data) {
         const mailForUser = {
-            from: "testnodemail@gmail.com",
+            from: "hello@ultroneous.com",
             to: req.body.email,
-            subject: "Inquire",
+            subject: "Thanks for connecting with ultroNeous",
             html: data,
         };
 

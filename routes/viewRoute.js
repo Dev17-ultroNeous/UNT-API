@@ -169,7 +169,6 @@ router.post(
 
 
 router.get("/contactuslogin", viewController.contactusLogin);
-
 router.get("/forgetpasswordlink", viewController.forgetPasswordLink);
 router.get("/loginforgetpassword", viewController.loginForgetPassword);
 router.get("/blogforgetpassword", viewController.blogForgetPassword);
